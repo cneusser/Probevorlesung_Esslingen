@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFRS im Kontext · Deep Dive für Studierende</title>
+<style>
+  /* ============================================================
+     FONTS
+  ============================================================ */
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400&family=Spline+Sans:wght@400;500;600;700&family=Spline+Sans+Mono:wght@400;500&display=swap');
+
+  :root {
+    --ink:        #16161d;
+    --paper:      #f4f1ea;
+    --paper-pure: #faf8f3;
+    --navy:       #1e2761;
+    --navy-soft:  #3a4a8c;
+    --burgundy:   #6d2e46;
+    --gold:       #b8860b;
+    --gold-soft:  #d4a574;
+    --rule:       #cbc4b4;
+    --success:    #4a7a4a;
+    --danger:     #b04434;
+    --shadow:     rgba(22,22,29,0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Spline Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* grain overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ============================================================
+     PROGRESS BAR
+  ============================================================ */
+  #progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--navy), var(--gold));
+    z-index: 10000;
+    transition: width 0.1s linear;
+  }
+
+  /* ============================================================
+     NAV
+  ============================================================ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 2rem;
+    background: rgba(244,241,234,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav .brand {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+  }
+  nav .brand span { color: var(--gold); }
+  nav .links {
+    display: flex;
+    gap: 1.6rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+  nav .links a {
+    color: var(--ink);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  nav .links a:hover { color: var(--gold); }
+  nav .links a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0; height: 1.5px;
+    background: var(--gold);
+    transition: width 0.25s ease;
+  }
+  nav .links a:hover::after { width: 100%; }
+  @media (max-width: 720px) {
+    nav .links { display: none; }
+  }
+
+  /* ============================================================
+     HERO
+  ============================================================ */
+  header.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 7rem 2rem 4rem;
+    max-width: 1180px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero .eyebrow {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.6rem;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+  .hero .eyebrow::before {
+    content: "";
+    width: 42px; height: 1.5px;
+    background: var(--gold);
+    display: inline-block;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(2.8rem, 7vw, 5.6rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--navy);
+    margin-bottom: 1.8rem;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--burgundy);
+    font-weight: 400;
+  }
+  .hero .lede {
+    font-size: clamp(1.05rem, 2vw, 1.32rem);
+    max-width: 640px;
+    color: #2c2c38;
+    margin-bottom: 2.6rem;
+  }
+  .hero .meta {
+    display: flex;
+    gap: 2.4rem;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.6rem;
+    max-width: 640px;
+  }
+  .hero .meta div span {
+    display: block;
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.25rem;
+  }
+  .hero .meta div strong {
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .hero .scroll-cue {
+    position: absolute;
+    bottom: 2.2rem; left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--navy-soft);
+    animation: bob 2.4s ease-in-out infinite;
+  }
+  @keyframes bob {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%     { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* big floating IFRS watermark */
+  .hero .watermark {
+    position: absolute;
+    right: -2rem; top: 18%;
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: clamp(8rem, 22vw, 20rem);
+    color: var(--navy);
+    opacity: 0.05;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  /* ============================================================
+     SECTION SCAFFOLD
+  ============================================================ */
+  section {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 5.5rem 2rem;
+    position: relative;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    margin-bottom: 2.8rem;
+  }
+  .section-head .num {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .section-head h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 4vw, 2.9rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+  }
+  .section-intro {
+    font-size: 1.08rem;
+    max-width: 680px;
+    margin-bottom: 2.8rem;
+    color: #34343f;
+  }
+
+  /* reveal-on-scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(.2,.7,.2,1), transform 0.7s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* ============================================================
+     THE BRIDGE — central concept
+  ============================================================ */
+  .bridge {
+    background: var(--navy);
+    color: var(--paper);
+  }
+  .bridge-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 5.5rem 2rem;
+  }
+  .bridge .section-head h2 { color: var(--paper-pure); }
+  .bridge .section-head .num { color: var(--gold-soft); }
+  .bridge .section-intro { color: #cdd2e8; }
+  .bridge-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1.5rem;
+    align-items: stretch;
+    margin-top: 1rem;
+  }
+  @media (max-width: 820px) {
+    .bridge-grid { grid-template-columns: 1fr; }
+    .bridge-grid .connector { transform: rotate(90deg); height: 60px; }
+  }
+  .bridge-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(212,165,116,0.3);
+    border-radius: 4px;
+    padding: 2rem 1.8rem;
+  }
+  .bridge-card .tag {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    margin-bottom: 0.8rem;
+  }
+  .bridge-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--paper-pure);
+    margin-bottom: 0.8rem;
+    line-height: 1.15;
+  }
+  .bridge-card p {
+    font-size: 0.92rem;
+    color: #c3c8de;
+  }
+  .connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold-soft);
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+  .connector .ring {
+    width: 58px; height: 58px;
+    border: 1.5px solid var(--gold-soft);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    background: var(--navy);
+  }
+  .bridge-thesis {
+    margin-top: 2.6rem;
+    border-left: 3px solid var(--gold);
+    padding: 0.4rem 0 0.4rem 1.6rem;
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+    font-style: italic;
+    color: var(--paper-pure);
+    max-width: 820px;
+  }
+
+  /* ============================================================
+     CONCEPT CARDS / GLOSSARY
+  ============================================================ */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+    gap: 1.4rem;
+  }
+  .concept {
+    background: var(--paper-pure);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1.7rem;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .concept:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px var(--shadow);
+  }
+  .concept .marker {
+    width: 34px; height: 34px;
+    background: var(--navy);
+    color: var(--gold-soft);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  .concept h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.55rem;
+  }
+  .concept p { font-size: 0.92rem; color: #3a3a45; }
+  .concept .termtag {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-top: 0.7rem;
+    display: block;
+  }
+
+  /* ============================================================
+     INTERACTIVE: amortisation explorer
+  ============================================================ */
+  .lab {
+    background: var(--paper-pure);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 2.2rem;
+    margin-top: 1rem;
+  }
+  .lab-head {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 1.6rem;
+  }
+  .lab-head .dot {
+    width: 9px; height: 9px;
+    background: var(--gold);
+    border-radius: 50%;
+  }
+  .lab-head span {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .control label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+  .control label .val {
+    font-family: 'Spline Sans Mono', monospace;
+    color: var(--burgundy);
+  }
+  .control input[type=range] {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 4px;
+    background: var(--rule);
+    border-radius: 2px;
+    outline: none;
+  }
+  .control input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 19px; height: 19px;
+    background: var(--navy);
+    border: 3px solid var(--gold-soft);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .control input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.18); }
+  .control input[type=range]::-moz-range-thumb {
+    width: 19px; height: 19px;
+    background: var(--navy);
+    border: 3px solid var(--gold-soft);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .lab-result {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    gap: 1rem;
+    margin-bottom: 1.8rem;
+  }
+  .stat {
+    text-align: center;
+    padding: 1.1rem 0.6rem;
+    background: var(--paper);
+    border-radius: 4px;
+    border: 1px solid var(--rule);
+  }
+  .stat .figure {
+    font-family: 'Fraunces', serif;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .stat .label {
+    font-size: 0.72rem;
+    color: var(--navy-soft);
+    margin-top: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  table.amort {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+  }
+  table.amort th {
+    background: var(--navy);
+    color: var(--paper-pure);
+    font-weight: 600;
+    padding: 0.65rem 0.5rem;
+    text-align: right;
+    font-size: 0.76rem;
+    letter-spacing: 0.03em;
+  }
+  table.amort th:first-child { text-align: center; }
+  table.amort td {
+    padding: 0.55rem 0.5rem;
+    text-align: right;
+    border-bottom: 1px solid var(--rule);
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.8rem;
+  }
+  table.amort td:first-child {
+    text-align: center;
+    font-weight: 600;
+    font-family: 'Spline Sans', sans-serif;
+  }
+  table.amort tr:hover td { background: rgba(184,134,11,0.06); }
+  table.amort tr.sum td {
+    background: var(--paper);
+    font-weight: 700;
+    color: var(--navy);
+    border-top: 2px solid var(--navy);
+  }
+
+  .bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.6rem;
+    height: 180px;
+    margin-top: 1.5rem;
+    padding: 0 0.5rem;
+  }
+  .bar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+  }
+  .bar-stack {
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+    border-radius: 3px 3px 0 0;
+    overflow: hidden;
+    transition: height 0.5s cubic-bezier(.2,.7,.2,1);
+  }
+  .bar-dep { background: var(--navy); }
+  .bar-int { background: var(--gold-soft); }
+  .bar-col .yr {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--navy-soft);
+    margin-top: 0.4rem;
+  }
+  .legend {
+    display: flex;
+    gap: 1.4rem;
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    color: #3a3a45;
+  }
+  .legend i {
+    width: 12px; height: 12px;
+    display: inline-block;
+    border-radius: 2px;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+  }
+
+  /* ============================================================
+     COMPARISON SPLIT
+  ============================================================ */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+  }
+  @media (max-width: 720px) { .split { grid-template-columns: 1fr; } }
+  .split-pane {
+    border-radius: 4px;
+    padding: 1.8rem;
+  }
+  .split-pane.before {
+    background: var(--paper-pure);
+    border: 1px solid var(--rule);
+  }
+  .split-pane.after {
+    background: var(--navy);
+    color: var(--paper);
+  }
+  .split-pane .ptag {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+  .split-pane.before .ptag { color: var(--burgundy); }
+  .split-pane.after .ptag { color: var(--gold-soft); }
+  .split-pane h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .split-pane.before h3 { color: var(--navy); }
+  .split-pane ul { list-style: none; }
+  .split-pane li {
+    font-size: 0.9rem;
+    padding: 0.4rem 0 0.4rem 1.3rem;
+    position: relative;
+  }
+  .split-pane li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+  }
+  .split-pane.before li::before { color: var(--gold); }
+  .split-pane.after li::before { color: var(--gold-soft); }
+
+  /* ============================================================
+     MECHANISM TIMELINE
+  ============================================================ */
+  .timeline {
+    position: relative;
+    padding-left: 2.4rem;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(var(--gold), var(--burgundy));
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 2.2rem;
+  }
+  .tl-item::before {
+    content: "";
+    position: absolute;
+    left: -2.4rem; top: 4px;
+    width: 18px; height: 18px;
+    background: var(--paper);
+    border: 3px solid var(--gold);
+    border-radius: 50%;
+  }
+  .tl-item .tl-phase {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+  .tl-item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.35rem;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+  .tl-item p { font-size: 0.93rem; color: #3a3a45; }
+  .tl-item .lit {
+    font-size: 0.78rem;
+    color: var(--navy-soft);
+    font-style: italic;
+    margin-top: 0.5rem;
+  }
+
+  /* ============================================================
+     QUIZ
+  ============================================================ */
+  .quiz {
+    background: var(--burgundy);
+    color: var(--paper);
+  }
+  .quiz-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 5.5rem 2rem;
+  }
+  .quiz .section-head h2 { color: var(--paper-pure); }
+  .quiz .section-head .num { color: var(--gold-soft); }
+  .quiz .section-intro { color: #e6d4dc; }
+  .qcard {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(212,165,116,0.3);
+    border-radius: 5px;
+    padding: 1.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .qcard .qtext {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    margin-bottom: 1.1rem;
+    color: var(--paper-pure);
+  }
+  .qopts { display: flex; flex-direction: column; gap: 0.6rem; }
+  .qopt {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--paper);
+  }
+  .qopt:hover { background: rgba(255,255,255,0.1); }
+  .qopt.correct {
+    background: #4a7a4a;
+    border-color: #6fae6f;
+    color: #fff;
+    font-weight: 600;
+  }
+  .qopt.wrong {
+    background: #b04434;
+    border-color: #d96b5c;
+    color: #fff;
+    font-weight: 600;
+  }
+  .qexplain {
+    margin-top: 1rem;
+    font-size: 0.86rem;
+    color: #e6d4dc;
+    border-left: 2px solid var(--gold-soft);
+    padding-left: 1rem;
+    display: none;
+  }
+  .qexplain.show { display: block; }
+
+  /* ============================================================
+     CALLOUT
+  ============================================================ */
+  .callout {
+    background: var(--paper-pure);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--gold);
+    border-radius: 4px;
+    padding: 1.6rem 1.8rem;
+    margin-top: 2rem;
+  }
+  .callout .co-tag {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .callout p { font-size: 0.95rem; }
+
+  /* ============================================================
+     SOURCES
+  ============================================================ */
+  .sources-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+    gap: 1rem;
+  }
+  .source {
+    border-left: 2px solid var(--gold);
+    padding: 0.6rem 0 0.6rem 1.1rem;
+    font-size: 0.86rem;
+  }
+  .source strong { color: var(--navy); font-weight: 600; }
+  .source span { color: var(--navy-soft); font-style: italic; }
+
+  /* ============================================================
+     FOOTER
+  ============================================================ */
+  footer {
+    background: var(--navy);
+    color: #c3c8de;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  footer .fbrand {
+    font-family: 'Fraunces', serif;
+    font-weight: 900;
+    font-size: 1.3rem;
+    color: var(--paper-pure);
+    margin-bottom: 0.6rem;
+  }
+  footer .fbrand span { color: var(--gold-soft); }
+  footer p { font-size: 0.82rem; max-width: 540px; margin: 0 auto 0.4rem; }
+  footer .fmeta {
+    margin-top: 1.4rem;
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--gold-soft);
+  }
+
+  /* section tints */
+  .tint { background: linear-gradient(180deg, var(--paper) 0%, #ece8de 100%); }
+
+  ::selection { background: var(--gold-soft); color: var(--navy); }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav>
+  <div class="brand">IFRS <span>im Kontext</span></div>
+  <div class="links">
+    <a href="#bridge">Die Klammer</a>
+    <a href="#leasing">IFRS 16</a>
+    <a href="#lab">Rechenlabor</a>
+    <a href="#succession">Nachfolge</a>
+    <a href="#quiz">Selbsttest</a>
+    <a href="#sources">Quellen</a>
+  </div>
+</nav>
+
+<!-- ============================================================ HERO -->
+<header class="hero">
+  <div class="watermark">§</div>
+  <div class="eyebrow">Deep Dive · Weiterbildungsmodul für Studierende</div>
+  <h1>Wie ein Standard<br>die <em>Wahrheit</em><br>einer Bilanz formt.</h1>
+  <p class="lede">
+    Zwei Vorträge, eine gemeinsame Klammer: Internationale Rechnungslegung entscheidet,
+    was in einer Bilanz sichtbar wird — bei einem geleasten Fahrzeug ebenso wie bei der
+    Übernahme eines Familienunternehmens. Dieses Modul verbindet beide Welten und macht
+    den roten Faden sichtbar.
+  </p>
+  <div class="meta">
+    <div><span>Kontext</span><strong>B.Sc. Technische BWL</strong></div>
+    <div><span>Niveau</span><strong>Grundlagen → Vertiefung</strong></div>
+    <div><span>Bearbeitung</span><strong>ca. 40 Minuten</strong></div>
+    <div><span>Autor</span><strong>Dr. Christian Neusser</strong></div>
+  </div>
+  <div class="scroll-cue">↓ scrollen</div>
+</header>
+
+<!-- ============================================================ BRIDGE -->
+<div class="bridge" id="bridge">
+  <div class="bridge-inner">
+    <div class="section-head reveal">
+      <span class="num">01</span>
+      <h2>Die gemeinsame Klammer</h2>
+    </div>
+    <p class="section-intro reveal">
+      Auf den ersten Blick haben ein Leasingvertrag über eine CNC-Maschine und die
+      Nachfolge in einem Familienunternehmen wenig gemeinsam. Tatsächlich stellen beide
+      dieselbe Grundfrage — und beide werden von der internationalen Rechnungslegung
+      beantwortet.
+    </p>
+
+    <div class="bridge-grid">
+      <div class="bridge-card reveal">
+        <div class="tag">Vortrag 1 · IFRS 16</div>
+        <h3>Leasing</h3>
+        <p>
+          Ein Unternehmen nutzt einen Vermögenswert, ohne ihn zu besitzen.
+          Frage: Gehört diese Nutzung in die Bilanz — und wenn ja, mit welchem Wert?
+        </p>
+      </div>
+      <div class="connector reveal">
+        <div class="ring">§</div>
+        IFRS
+      </div>
+      <div class="bridge-card reveal">
+        <div class="tag">Vortrag 2 · IFRS 3</div>
+        <h3>Nachfolge</h3>
+        <p>
+          Ein Unternehmen wird übernommen. Frage: Wie wird der Kaufpreis auf
+          Vermögenswerte verteilt — und was geschieht mit dem, was übrig bleibt?
+        </p>
+      </div>
+    </div>
+
+    <div class="bridge-thesis reveal">
+      Beide Standards lösen dasselbe Problem: Sie übersetzen wirtschaftliche Substanz
+      in bilanzielle Form. „Substance over form" — der Inhalt zählt, nicht das Etikett.
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ LEASING -->
+<section id="leasing">
+  <div class="section-head reveal">
+    <span class="num">02</span>
+    <h2>IFRS 16 — Leasing sichtbar machen</h2>
+  </div>
+  <p class="section-intro reveal">
+    Bis 2019 konnten Unternehmen riesige Verpflichtungen außerhalb der Bilanz halten.
+    Eine Fluggesellschaft, die ihre Flotte least, sah schlanker aus als eine, die kaufte —
+    obwohl beide wirtschaftlich gebunden waren. IFRS 16 hat das beendet.
+  </p>
+
+  <div class="card-grid">
+    <div class="concept reveal">
+      <div class="marker">A</div>
+      <h3>Miete oder Leasing?</h3>
+      <p>
+        Im Alltag meint <em>Miete</em> das Kurzfristige und Flexible, <em>Leasing</em>
+        das Langfristige und Vertragsfixierte. IFRS 16 kennt diese Unterscheidung
+        gar nicht — der Standard fragt nur nach wirtschaftlicher Substanz.
+      </p>
+      <span class="termtag">GRUNDBEGRIFF</span>
+    </div>
+    <div class="concept reveal">
+      <div class="marker">B</div>
+      <h3>Der Identifikationstest</h3>
+      <p>
+        Ein Leasingverhältnis liegt vor, wenn das Recht zur Nutzung eines
+        <em>identifizierten Vermögenswerts</em> für einen Zeitraum übertragen wird
+        und der Nutzer diese Nutzung kontrolliert.
+      </p>
+      <span class="termtag">IFRS 16.9</span>
+    </div>
+    <div class="concept reveal">
+      <div class="marker">C</div>
+      <h3>Right-of-Use Asset</h3>
+      <p>
+        Das ökonomische Recht, den Vermögenswert über die Laufzeit zu nutzen.
+        Es wird wie Eigentum aktiviert — auch ohne juristisches Eigentum.
+      </p>
+      <span class="termtag">AKTIVSEITE</span>
+    </div>
+    <div class="concept reveal">
+      <div class="marker">D</div>
+      <h3>Lease Liability</h3>
+      <p>
+        Die Verpflichtung zu künftigen Leasingzahlungen, bewertet mit dem
+        Barwert. Diskontiert wird mit dem Grenzfremdkapitalzinssatz.
+      </p>
+      <span class="termtag">PASSIVSEITE</span>
+    </div>
+  </div>
+
+  <div class="callout reveal">
+    <div class="co-tag">Warum das zählt</div>
+    <p>
+      Bei der Erstanwendung 2019 wuchs die Bilanzsumme der Lufthansa um rund
+      <strong>8 Milliarden Euro</strong>, die der Deutschen Post DHL um etwa
+      <strong>5 Milliarden Euro</strong>. Das Geschäft blieb unverändert — nur seine
+      bilanzielle Darstellung verschob sich. Genau deshalb mussten Unternehmen
+      damals mit ihren Banken über Kreditklauseln neu verhandeln.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ THE LAB -->
+<section id="lab" class="tint">
+  <div class="section-head reveal">
+    <span class="num">03</span>
+    <h2>Rechenlabor — selbst ausprobieren</h2>
+  </div>
+  <p class="section-intro reveal">
+    Theorie wird greifbar, wenn man mit den Zahlen spielt. Verändere die Parameter
+    eines Leasingvertrags und beobachte, wie sich Barwert, Amortisation und der
+    typische „front-loading"-Effekt verschieben.
+  </p>
+
+  <div class="lab reveal">
+    <div class="lab-head">
+      <span class="dot"></span>
+      <span>Interaktives Modell · CNC-Maschine</span>
+    </div>
+
+    <div class="controls">
+      <div class="control">
+        <label>Jährliche Zahlung <span class="val" id="vPay">€ 50.000</span></label>
+        <input type="range" id="iPay" min="10000" max="120000" step="5000" value="50000">
+      </div>
+      <div class="control">
+        <label>Laufzeit <span class="val" id="vTerm">5 Jahre</span></label>
+        <input type="range" id="iTerm" min="2" max="12" step="1" value="5">
+      </div>
+      <div class="control">
+        <label>Zinssatz (IBR) <span class="val" id="vRate">5,0 %</span></label>
+        <input type="range" id="iRate" min="1" max="12" step="0.5" value="5">
+      </div>
+    </div>
+
+    <div class="lab-result">
+      <div class="stat">
+        <div class="figure" id="oPV">€ 216.474</div>
+        <div class="label">Barwert / RoU-Asset</div>
+      </div>
+      <div class="stat">
+        <div class="figure" id="oInt">€ 33.526</div>
+        <div class="label">Σ Zinsaufwand</div>
+      </div>
+      <div class="stat">
+        <div class="figure" id="oCash">€ 250.000</div>
+        <div class="label">Σ Cash-Zahlungen</div>
+      </div>
+      <div class="stat">
+        <div class="figure" id="oDep">€ 43.295</div>
+        <div class="label">Abschreibung p.a.</div>
+      </div>
+    </div>
+
+    <div class="bars" id="bars"></div>
+    <div class="legend">
+      <span><i style="background:var(--navy)"></i>Abschreibung (konstant)</span>
+      <span><i style="background:var(--gold-soft)"></i>Zinsaufwand (fallend)</span>
+    </div>
+
+    <table class="amort" id="amTable">
+      <thead>
+        <tr><th>Jahr</th><th>Anfangsbestand</th><th>Zins</th><th>Zahlung</th><th>Tilgung</th><th>Endbestand</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="callout" style="margin-top:1.8rem">
+      <div class="co-tag">Beobachtung</div>
+      <p id="labInsight">
+        Die Summe aller Aufwendungen entspricht exakt den Cash-Zahlungen. IFRS 16
+        erzeugt keinen Mehraufwand — es verschiebt nur das Timing. Der Gesamtaufwand
+        ist in frühen Jahren höher („front-loading"), weil der Zinsanteil anfangs groß ist.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ SUCCESSION -->
+<section id="succession">
+  <div class="section-head reveal">
+    <span class="num">04</span>
+    <h2>IFRS 3 — wenn ein Unternehmen den Besitzer wechselt</h2>
+  </div>
+  <p class="section-intro reveal">
+    Eine Unternehmensnachfolge ist nicht nur ein Führungs- und Kulturthema. Sobald
+    ein Familienunternehmen extern übernommen wird, entsteht ein bilanzielles Ereignis —
+    geregelt durch IFRS 3. Hier zeigt sich dieselbe Logik wie bei IFRS 16: Wirtschaftliche
+    Substanz muss in bilanzielle Form übersetzt werden.
+  </p>
+
+  <div class="split reveal">
+    <div class="split-pane before">
+      <div class="ptag">Vor der Nachfolge</div>
+      <h3>Familien-typische Passivseite</h3>
+      <ul>
+        <li>Eigenkapital der Familie</li>
+        <li>Gesellschafterdarlehen, nachrangig und flexibel</li>
+        <li>Langjährige Hausbank-Beziehung</li>
+        <li>Fördermittel (KfW, L-Bank)</li>
+        <li>Geringe externe Reporting-Anforderungen</li>
+      </ul>
+    </div>
+    <div class="split-pane after">
+      <div class="ptag">Nach externer Nachfolge</div>
+      <h3>Institutionalisierter Mix</h3>
+      <ul>
+        <li>Akquisitionsfinanzierung mit Covenants</li>
+        <li>Mezzanine-Kapital</li>
+        <li>Private Equity als Co-Investor</li>
+        <li>Earn-Out gegenüber der Alt-Inhaberfamilie</li>
+        <li>Umfangreiches monatliches Reporting</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Fraunces',serif;font-size:1.5rem;color:var(--navy);margin:3rem 0 1.5rem">
+    Drei Mechanismen, die die Bilanz verändern
+  </h3>
+
+  <div class="timeline reveal">
+    <div class="tl-item">
+      <div class="tl-phase">Mechanismus 1</div>
+      <h3>Kaufpreisallokation &amp; Goodwill</h3>
+      <p>
+        Der Kaufpreis wird auf identifizierbare Vermögenswerte verteilt — auch auf
+        immaterielle wie Marke und Kundenbeziehungen. Was übrig bleibt, wird Goodwill.
+        Eine 150-jährige Familientradition wird so zur bilanziellen Residualgröße.
+      </p>
+      <div class="lit">Anschluss: IFRS 3 · IAS 36 Impairment-Test · Glaum et al. (2018)</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Mechanismus 2</div>
+      <h3>Finanzierungsmix-Shift</h3>
+      <p>
+        Die Passivseite kehrt sich um: vom beziehungsbasierten Modell zum
+        vertragsbasierten Modell. Rechnungswesen wird Governance-relevant, weil
+        Covenants und Reporting-Pflichten greifen.
+      </p>
+      <div class="lit">Anschluss: Pecking Order (Myers 1984) · Croci et al. (2011)</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">Mechanismus 3</div>
+      <h3>Bilanzpolitische Gestaltung</h3>
+      <p>
+        Neue Eigentümer nutzen Gestaltungsspielräume zum Signaling: Big-Bath-Effekte
+        schaffen einen niedrigen Startpunkt, strategisches Goodwill-Impairment
+        distanziert von der Alt-Strategie.
+      </p>
+      <div class="lit">Anschluss: Healy &amp; Wahlen (1999) · Legitimitätstheorie (Suchman 1995)</div>
+    </div>
+  </div>
+
+  <div class="callout reveal">
+    <div class="co-tag">Die Verbindung zu IFRS 16</div>
+    <p>
+      In beiden Fällen geht es um Bewertung unter Unsicherheit. Bei IFRS 16 ist der
+      <strong>Diskontierungssatz</strong> die kritische Schätzung; bei IFRS 3 ist es der
+      <strong>Fair Value</strong> immaterieller Vermögenswerte. Beide Standards geben dem
+      Bilanzierenden Ermessensspielräume — und genau dort beginnt die wissenschaftlich
+      spannende Frage: Wie werden diese Spielräume genutzt?
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================ QUIZ -->
+<div class="quiz" id="quiz">
+  <div class="quiz-inner">
+    <div class="section-head reveal">
+      <span class="num">05</span>
+      <h2>Selbsttest</h2>
+    </div>
+    <p class="section-intro reveal">
+      Fünf Fragen, um das Verständnis zu prüfen. Klick auf die Antwort, die du für
+      richtig hältst — die Erklärung erscheint sofort.
+    </p>
+    <div id="quizHost"></div>
+  </div>
+</div>
+
+<!-- ============================================================ SOURCES -->
+<section id="sources">
+  <div class="section-head reveal">
+    <span class="num">06</span>
+    <h2>Quellen &amp; Weiterlesen</h2>
+  </div>
+  <p class="section-intro reveal">
+    Wer tiefer einsteigen möchte, findet hier die zentralen Standardtexte,
+    Lehrbücher und wissenschaftlichen Arbeiten — geordnet nach Einstiegsniveau.
+  </p>
+
+  <h3 style="font-family:'Fraunces',serif;color:var(--navy);font-size:1.2rem;margin-bottom:1rem">
+    Standards &amp; Praxisliteratur
+  </h3>
+  <div class="sources-list reveal" style="margin-bottom:2.5rem">
+    <div class="source"><strong>IFRS Foundation (2024).</strong> IFRS 16 Leases &amp; IFRS 3 Business Combinations. <span>Standardtexte, ifrs.org</span></div>
+    <div class="source"><strong>BDO (2024).</strong> IFRS Accounting Standards in Practice — IFRS 16. <span>Frei verfügbar, gut für den Einstieg</span></div>
+    <div class="source"><strong>Pellens, Fülbier, Gassen, Sellhorn (2021).</strong> Internationale Rechnungslegung. 11. Aufl. <span>Deutschsprachiges Standardlehrbuch</span></div>
+    <div class="source"><strong>Deloitte.</strong> iasplus.com <span>Kostenlose Standardzusammenfassungen</span></div>
+  </div>
+
+  <h3 style="font-family:'Fraunces',serif;color:var(--navy);font-size:1.2rem;margin-bottom:1rem">
+    Wissenschaftliche Vertiefung
+  </h3>
+  <div class="sources-list reveal">
+    <div class="source"><strong>Morales-Díaz &amp; Zamora-Ramírez (2018).</strong> The Impact of IFRS 16 on Key Financial Ratios. <span>Accounting in Europe 15(1)</span></div>
+    <div class="source"><strong>Giner &amp; Pardo (2023).</strong> The Value Relevance of Operating Lease Liabilities. <span>Accounting in Europe</span></div>
+    <div class="source"><strong>Glaum, Landsman &amp; Wyrwa (2018).</strong> Goodwill Impairment — international evidence. <span>J. of Accounting and Public Policy</span></div>
+    <div class="source"><strong>Healy &amp; Wahlen (1999).</strong> A Review of the Earnings Management Literature. <span>Accounting Horizons 13(4)</span></div>
+    <div class="source"><strong>Imhoff, Lipe &amp; Wright (1991, 1997).</strong> Operating Leases: Constructive Capitalization. <span>Accounting Horizons</span></div>
+    <div class="source"><strong>Schickinger et al. (2022).</strong> Family Firms and Capital Structure after Succession. <span>J. of Business Venturing</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="fbrand">IFRS <span>im Kontext</span></div>
+  <p>
+    Ein Weiterbildungsmodul, das zwei Probevorträge zu einem zusammenhängenden
+    Lernpfad verbindet — von der Leasingbilanzierung bis zur Unternehmensnachfolge.
+  </p>
+  <p>Erstellt als Begleitmaterial · Dr. Christian Neusser · Hochschule Esslingen</p>
+  <div class="fmeta">SUBSTANCE OVER FORM · 2026</div>
+</footer>
+
+<script>
+/* ============================================================
+   PROGRESS BAR
+============================================================ */
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  progress.style.width = (window.scrollY / h * 100) + '%';
+});
+
+/* ============================================================
+   REVEAL ON SCROLL
+============================================================ */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ============================================================
+   AMORTISATION LAB
+============================================================ */
+const iPay = document.getElementById('iPay');
+const iTerm = document.getElementById('iTerm');
+const iRate = document.getElementById('iRate');
+const fmt = (n) => '€ ' + Math.round(n).toLocaleString('de-DE');
+
+function recalc() {
+  const pay = +iPay.value;
+  const term = +iTerm.value;
+  const rate = +iRate.value / 100;
+
+  document.getElementById('vPay').textContent = fmt(pay);
+  document.getElementById('vTerm').textContent = term + ' Jahre';
+  document.getElementById('vRate').textContent = (rate*100).toFixed(1).replace('.',',') + ' %';
+
+  // present value of annuity
+  const pv = pay * (1 - Math.pow(1+rate, -term)) / rate;
+  const dep = pv / term;
+
+  // build amortisation schedule
+  let bal = pv, totalInt = 0;
+  const rows = [];
+  for (let y = 1; y <= term; y++) {
+    const interest = bal * rate;
+    const principal = pay - interest;
+    const closing = bal - principal;
+    totalInt += interest;
+    rows.push({ y, open: bal, interest, pay, principal, closing: Math.abs(closing) < 0.5 ? 0 : closing, dep });
+    bal = closing;
+  }
+
+  document.getElementById('oPV').textContent = fmt(pv);
+  document.getElementById('oInt').textContent = fmt(totalInt);
+  document.getElementById('oCash').textContent = fmt(pay * term);
+  document.getElementById('oDep').textContent = fmt(dep);
+
+  // table
+  const tb = document.querySelector('#amTable tbody');
+  tb.innerHTML = '';
+  rows.forEach(r => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td>'+r.y+'</td><td>'+fmt(r.open)+'</td><td>'+fmt(r.interest)+
+      '</td><td>'+fmt(r.pay)+'</td><td>'+fmt(r.principal)+'</td><td>'+fmt(r.closing)+'</td>';
+    tb.appendChild(tr);
+  });
+  const sum = document.createElement('tr');
+  sum.className = 'sum';
+  sum.innerHTML = '<td>Σ</td><td>—</td><td>'+fmt(totalInt)+'</td><td>'+fmt(pay*term)+
+    '</td><td>'+fmt(pv)+'</td><td>0</td>';
+  tb.appendChild(sum);
+
+  // bars (total expense per year = dep + interest)
+  const bars = document.getElementById('bars');
+  bars.innerHTML = '';
+  const maxExp = dep + rows[0].interest;
+  rows.forEach(r => {
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+    const stack = document.createElement('div');
+    stack.className = 'bar-stack';
+    const totalH = ((r.dep + r.interest) / maxExp) * 100;
+    stack.style.height = totalH + '%';
+    const depPart = document.createElement('div');
+    depPart.className = 'bar-dep';
+    depPart.style.height = (r.dep / (r.dep + r.interest) * 100) + '%';
+    const intPart = document.createElement('div');
+    intPart.className = 'bar-int';
+    intPart.style.height = (r.interest / (r.dep + r.interest) * 100) + '%';
+    stack.appendChild(depPart);
+    stack.appendChild(intPart);
+    const yr = document.createElement('div');
+    yr.className = 'yr';
+    yr.textContent = 'J' + r.y;
+    col.appendChild(stack);
+    col.appendChild(yr);
+    bars.appendChild(col);
+  });
+
+  // insight
+  const firstExp = dep + rows[0].interest;
+  const lastExp = dep + rows[rows.length-1].interest;
+  const spread = ((firstExp - lastExp) / lastExp * 100).toFixed(0);
+  document.getElementById('labInsight').innerHTML =
+    'Die Summe aller Aufwendungen entspricht exakt den Cash-Zahlungen von <strong>' +
+    fmt(pay*term) + '</strong>. IFRS 16 erzeugt keinen Mehraufwand — es verschiebt nur das Timing. ' +
+    'Im ersten Jahr liegt der Gesamtaufwand rund <strong>' + spread +
+    ' %</strong> über dem des letzten Jahres. Das ist der „front-loading"-Effekt: ' +
+    'Der Zinsanteil ist anfangs hoch und sinkt mit dem Schuldenstand.';
+}
+[iPay, iTerm, iRate].forEach(el => el.addEventListener('input', recalc));
+recalc();
+
+/* ============================================================
+   QUIZ
+============================================================ */
+const quizData = [
+  {
+    q: "Worin liegt der entscheidende Unterschied zwischen IAS 17 und IFRS 16 aus Sicht des Leasingnehmers?",
+    opts: [
+      "IFRS 16 senkt die Leasingkosten insgesamt",
+      "IFRS 16 bringt nahezu alle Leasingverhältnisse in die Bilanz",
+      "IFRS 16 schafft das Leasing als Finanzierungsform ab",
+      "IFRS 16 betrifft nur Leasinggeber, nicht Leasingnehmer"
+    ],
+    correct: 1,
+    explain: "IFRS 16 beendet die Unterscheidung zwischen Finance und Operating Lease für Leasingnehmer. Fast alle Leasingverhältnisse werden über das Right-of-Use-Modell aktiviert — die Gesamtkosten bleiben gleich, nur ihre Sichtbarkeit ändert sich."
+  },
+  {
+    q: "Warum steigt das EBITDA unter IFRS 16, obwohl sich das Geschäft nicht verändert hat?",
+    opts: [
+      "Weil die Umsätze durch IFRS 16 steigen",
+      "Weil Leasingzahlungen nun komplett entfallen",
+      "Weil der Mietaufwand durch Abschreibung und Zins ersetzt wird — beide außerhalb des EBITDA",
+      "Weil IFRS 16 eine Steuerersparnis erzwingt"
+    ],
+    correct: 2,
+    explain: "Unter IAS 17 war die gesamte Leasingrate ein operativer Aufwand und reduzierte das EBITDA. Unter IFRS 16 wird sie durch Abschreibung und Zinsaufwand ersetzt — beide werden in der EBITDA-Berechnung nicht berücksichtigt. Das EBITDA steigt rein rechnerisch."
+  },
+  {
+    q: "Was bezeichnet der Begriff ‚Right-of-Use Asset‘?",
+    opts: [
+      "Den juristischen Eigentumsanspruch am Leasinggegenstand",
+      "Das ökonomische Recht, einen Vermögenswert über die Laufzeit zu nutzen",
+      "Eine Rückstellung für Reparaturkosten",
+      "Den Restwert des Leasinggegenstands am Vertragsende"
+    ],
+    correct: 1,
+    explain: "Das Right-of-Use Asset ist das aktivierte Nutzungsrecht — nicht das juristische Eigentum. IFRS 16 behandelt dieses Recht bilanziell wie Eigentum, weil der Leasingnehmer wirtschaftlich über die Nutzung verfügt."
+  },
+  {
+    q: "Was geschieht bei einer Kaufpreisallokation nach IFRS 3 mit dem Betrag, der nach Bewertung aller identifizierbaren Vermögenswerte übrig bleibt?",
+    opts: [
+      "Er wird sofort als Aufwand verbucht",
+      "Er wird an die Alt-Eigentümer zurückgezahlt",
+      "Er wird als Goodwill aktiviert und unterliegt dem Impairment-Test",
+      "Er wird steuerfrei in die Rücklagen eingestellt"
+    ],
+    correct: 2,
+    explain: "Der Residualbetrag wird als Goodwill aktiviert. Goodwill wird nicht planmäßig abgeschrieben, sondern jährlich auf Werthaltigkeit geprüft (Impairment-Test nach IAS 36). Gerade bei Familienunternehmen steckt im Goodwill oft der schwer bewertbare Markenwert."
+  },
+  {
+    q: "Was verbindet IFRS 16 und IFRS 3 konzeptionell?",
+    opts: [
+      "Beide schreiben dieselben Diskontierungssätze vor",
+      "Beide übersetzen wirtschaftliche Substanz in bilanzielle Form und enthalten Ermessensspielräume",
+      "Beide gelten nur für börsennotierte Unternehmen",
+      "Beide wurden zeitgleich abgeschafft"
+    ],
+    correct: 1,
+    explain: "Beide Standards folgen dem Prinzip ‚substance over form‘ — der wirtschaftliche Gehalt zählt, nicht das rechtliche Etikett. Und beide räumen dem Bilanzierenden Ermessen ein: bei IFRS 16 der Diskontierungssatz, bei IFRS 3 die Fair-Value-Bewertung immaterieller Vermögenswerte. Genau dort beginnt die bilanzpolitische Forschungsfrage."
+  }
+];
+
+const host = document.getElementById('quizHost');
+quizData.forEach((item, qi) => {
+  const card = document.createElement('div');
+  card.className = 'qcard reveal';
+  io.observe(card);
+  const qt = document.createElement('div');
+  qt.className = 'qtext';
+  qt.textContent = (qi+1) + '.  ' + item.q;
+  card.appendChild(qt);
+  const opts = document.createElement('div');
+  opts.className = 'qopts';
+  const explain = document.createElement('div');
+  explain.className = 'qexplain';
+  explain.textContent = item.explain;
+  item.opts.forEach((optText, oi) => {
+    const opt = document.createElement('div');
+    opt.className = 'qopt';
+    opt.textContent = optText;
+    opt.addEventListener('click', () => {
+      if (card.dataset.done) return;
+      card.dataset.done = '1';
+      if (oi === item.correct) {
+        opt.classList.add('correct');
+      } else {
+        opt.classList.add('wrong');
+        opts.children[item.correct].classList.add('correct');
+      }
+      explain.classList.add('show');
+    });
+    opts.appendChild(opt);
+  });
+  card.appendChild(opts);
+  card.appendChild(explain);
+  host.appendChild(card);
+});
+</script>
+
+</body>
+</html>
