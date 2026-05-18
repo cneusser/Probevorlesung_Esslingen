@@ -527,6 +527,18 @@
     color: var(--navy);
     border-top: 2px solid var(--navy);
   }
+  table.amort td.exp-col {
+    background: rgba(184,134,11,0.12);
+    color: var(--gold);
+    font-weight: 600;
+  }
+  table.amort tr.sum td.exp-col {
+    background: var(--gold);
+    color: var(--paper-pure);
+  }
+  table.amort th:last-child {
+    background: var(--gold);
+  }
 
   .bars {
     display: flex;
@@ -573,6 +585,199 @@
     border-radius: 2px;
     margin-right: 0.4rem;
     vertical-align: middle;
+  }
+
+  /* ============================================================
+     BALANCE SHEET VISUALISER
+  ============================================================ */
+  .bsheet-wrap {
+    background: var(--paper-pure);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 2.2rem;
+    margin-top: 1rem;
+  }
+  .bsheet-toggle {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .bsheet-toggle button {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    padding: 0.6rem 1.2rem;
+    border: 1.5px solid var(--navy);
+    background: transparent;
+    color: var(--navy);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.22s ease;
+  }
+  .bsheet-toggle button:hover { background: rgba(30,39,97,0.07); }
+  .bsheet-toggle button.active {
+    background: var(--navy);
+    color: var(--paper-pure);
+  }
+  .bsheet-stage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: end;
+  }
+  @media (max-width: 720px) {
+    .bsheet-stage { grid-template-columns: 1fr; gap: 3rem; }
+  }
+  .bs-col .bs-caption {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 0.7rem;
+    color: var(--navy-soft);
+  }
+  .bs-col.after .bs-caption { color: var(--gold); font-weight: 600; }
+  /* the stacked balance sheet itself */
+  .bs-graphic {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+  }
+  .bs-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .bs-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    border: 1.5px solid var(--paper-pure);
+    transition: height 0.6s cubic-bezier(.2,.7,.2,1);
+    overflow: hidden;
+    padding: 2px;
+  }
+  .bs-block .bs-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  .bs-block .bs-val {
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.78rem;
+  }
+  .bs-block.assets   { background: var(--navy-soft); }
+  .bs-block.equity   { background: var(--navy); }
+  .bs-block.liab     { background: var(--navy-soft); }
+  .bs-block.rou      { background: var(--gold); color: var(--ink); }
+  .bs-block.lease    { background: var(--gold); color: var(--ink); }
+  .bs-block.rou .bs-label, .bs-block.lease .bs-label { font-weight: 700; }
+  .bs-total {
+    text-align: center;
+    margin-top: 0.6rem;
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--navy);
+    font-weight: 500;
+  }
+  .bs-col.after .bs-total { color: var(--gold); font-weight: 700; }
+  /* metric chips below */
+  .bs-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .bs-chip {
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1rem;
+    background: var(--paper);
+    text-align: center;
+  }
+  .bs-chip .bs-chip-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--navy-soft);
+    margin-bottom: 0.35rem;
+  }
+  .bs-chip .bs-chip-val {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .bs-chip .bs-chip-delta {
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 0.2rem;
+  }
+  .bs-chip .up   { color: var(--danger); }
+  .bs-chip .down { color: var(--danger); }
+  .bs-chip .flat { color: var(--navy-soft); }
+
+  /* ============================================================
+     THREE-STATEMENT COMPARISON TABLE
+  ============================================================ */
+  .stmt-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+  .stmt-table th {
+    text-align: left;
+    padding: 0.85rem 1rem;
+    font-family: 'Spline Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+    vertical-align: middle;
+  }
+  .stmt-table th.h-stmt   { background: var(--navy); color: var(--paper-pure); border-radius: 4px 0 0 0; }
+  .stmt-table th.h-old    { background: var(--navy); color: var(--paper-pure); }
+  .stmt-table th.h-new    { background: var(--gold); color: var(--paper-pure); border-radius: 0 4px 0 0; }
+  .stmt-table td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .stmt-table .c-stmt {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--navy);
+    font-size: 0.98rem;
+    width: 18%;
+  }
+  .stmt-table .c-old { width: 38%; color: #3a3a45; }
+  .stmt-table .c-new { width: 44%; background: rgba(184,134,11,0.07); }
+  .stmt-table .c-new strong { color: var(--navy); }
+  .stmt-table tr:last-child td { border-bottom: none; }
+  .stmt-effect {
+    display: inline-block;
+    font-family: 'Spline Sans Mono', monospace;
+    font-size: 0.74rem;
+    font-weight: 500;
+    padding: 0.1rem 0.45rem;
+    border-radius: 3px;
+    margin: 0.15rem 0.25rem 0.15rem 0;
+    background: var(--navy);
+    color: var(--paper-pure);
+    white-space: nowrap;
+  }
+  @media (max-width: 720px) {
+    .stmt-table, .stmt-table tbody, .stmt-table tr, .stmt-table td { display: block; width: 100%; }
+    .stmt-table thead { display: none; }
+    .stmt-table tr { margin-bottom: 1.5rem; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+    .stmt-table td { border-bottom: 1px solid var(--rule); }
+    .stmt-table .c-stmt { background: var(--navy); color: var(--paper-pure); }
+    .stmt-table .c-stmt { width: 100%; }
+    .stmt-table .c-old, .stmt-table .c-new { width: 100%; }
   }
 
   /* ============================================================
@@ -814,6 +1019,7 @@
   <div class="links">
     <a href="#bridge">Die Klammer</a>
     <a href="#leasing">IFRS 16</a>
+    <a href="#bilanz">Die Bilanz</a>
     <a href="#lab">Rechenlabor</a>
     <a href="#succession">Nachfolge</a>
     <a href="#quiz">Selbsttest</a>
@@ -950,10 +1156,162 @@
   </div>
 </section>
 
+<!-- ============================================================ BALANCE SHEET -->
+<section id="bilanz">
+  <div class="section-head reveal">
+    <span class="num">03</span>
+    <h2>Die Bilanz — sichtbar verlängert</h2>
+  </div>
+  <p class="section-intro reveal">
+    Der Kern von IFRS 16 lässt sich an der Bilanz ablesen. Ein neues Nutzungsrecht
+    auf der Aktivseite, eine neue Leasingverbindlichkeit auf der Passivseite — beide
+    Seiten wachsen um denselben Betrag. Das nennt man <em>Bilanzverlängerung</em>.
+    Klicke unten zwischen den beiden Standards hin und her.
+  </p>
+
+  <div class="bsheet-wrap reveal">
+    <div class="bsheet-toggle">
+      <button id="btnIAS17" class="active" onclick="setBS('ias17')">Unter IAS 17</button>
+      <button id="btnIFRS16" onclick="setBS('ifrs16')">Unter IFRS 16</button>
+    </div>
+
+    <div class="bsheet-stage">
+      <!-- ASSET SIDE -->
+      <div class="bs-col">
+        <div class="bs-caption">Aktiva — Mittelverwendung</div>
+        <div class="bs-graphic">
+          <div class="bs-side" id="bsAssets"></div>
+        </div>
+        <div class="bs-total" id="bsAssetsTotal">Bilanzsumme: € 100 Mio.</div>
+      </div>
+      <!-- LIABILITY SIDE -->
+      <div class="bs-col after">
+        <div class="bs-caption">Passiva — Mittelherkunft</div>
+        <div class="bs-graphic">
+          <div class="bs-side" id="bsLiab"></div>
+        </div>
+        <div class="bs-total" id="bsLiabTotal">Bilanzsumme: € 100 Mio.</div>
+      </div>
+    </div>
+
+    <div class="bs-metrics">
+      <div class="bs-chip">
+        <div class="bs-chip-label">Bilanzsumme</div>
+        <div class="bs-chip-val" id="mTotal">€ 100 Mio.</div>
+        <div class="bs-chip-delta flat" id="mTotalD">Ausgangswert</div>
+      </div>
+      <div class="bs-chip">
+        <div class="bs-chip-label">Eigenkapitalquote</div>
+        <div class="bs-chip-val" id="mEqRatio">40,0 %</div>
+        <div class="bs-chip-delta flat" id="mEqRatioD">Ausgangswert</div>
+      </div>
+      <div class="bs-chip">
+        <div class="bs-chip-label">Verschuldungsgrad</div>
+        <div class="bs-chip-val" id="mGearing">150 %</div>
+        <div class="bs-chip-delta flat" id="mGearingD">Ausgangswert</div>
+      </div>
+      <div class="bs-chip">
+        <div class="bs-chip-label">Anlageintensität</div>
+        <div class="bs-chip-val" id="mAssetInt">—</div>
+        <div class="bs-chip-delta flat" id="mAssetIntD">RoU erhöht Aktiva</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:1.8rem">
+      <div class="co-tag">Beobachtung</div>
+      <p id="bsInsight">
+        Unter IAS 17 bleibt das Operating-Leasing unsichtbar — die Bilanz ist „kurz".
+        Wechsle zu IFRS 16 und beobachte, wie beide Seiten um den Barwert der
+        Leasingverpflichtung wachsen.
+      </p>
+    </div>
+  </div>
+
+  <p class="section-intro reveal" style="margin-top:3rem;margin-bottom:1.5rem">
+    Die Bilanzverlängerung ist nur der Anfang. IFRS 16 verändert <em>jedes</em> der drei
+    Rechenwerke — Bilanz, Gewinn- und Verlustrechnung und Kapitalflussrechnung.
+    Die folgende Übersicht stellt die alte und die neue Welt direkt gegenüber.
+  </p>
+
+  <div class="reveal" style="overflow-x:auto">
+    <table class="stmt-table">
+      <thead>
+        <tr>
+          <th class="h-stmt">Rechenwerk</th>
+          <th class="h-old">Unter IAS 17 (alt)</th>
+          <th class="h-new">Unter IFRS 16 (neu)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="c-stmt">Bilanz</td>
+          <td class="c-old">
+            Operating-Leasing erscheint <em>nicht</em> in der Bilanz. Es existiert nur
+            ein Mietaufwand in der GuV. Die Bilanz bleibt kurz.
+          </td>
+          <td class="c-new">
+            <strong>Nutzungsrecht und Leasingverbindlichkeit werden angesetzt.</strong>
+            Die Bilanz verlängert sich auf beiden Seiten.
+            <div style="margin-top:0.5rem">
+              <span class="stmt-effect">Aktiva ↑</span>
+              <span class="stmt-effect">Verschuldung ↑</span>
+              <span class="stmt-effect">EK-Quote ↓</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="c-stmt">GuV</td>
+          <td class="c-old">
+            Ein konstanter Mietaufwand pro Jahr (z. B. € 50.000), erfasst als
+            operativer Aufwand oberhalb des EBIT.
+          </td>
+          <td class="c-new">
+            <strong>Zwei Aufwendungen:</strong> Abschreibung (konstant) plus Zinsaufwand
+            (fallend). Der Gesamtaufwand ist <em>front-loaded</em>.
+            <div style="margin-top:0.5rem">
+              <span class="stmt-effect">EBITDA ↑</span>
+              <span class="stmt-effect">EBIT ≈</span>
+              <span class="stmt-effect">frühes Ergebnis ↓</span>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="c-stmt">Kapitalfluss&shy;rechnung</td>
+          <td class="c-old">
+            Die gesamte Leasingzahlung steckt im operativen Cashflow.
+          </td>
+          <td class="c-new">
+            <strong>Aufteilung:</strong> Der Tilgungsanteil wandert in den
+            Finanzierungs-Cashflow, nur der Zinsanteil bleibt (je nach Wahlrecht) operativ.
+            <div style="margin-top:0.5rem">
+              <span class="stmt-effect">operativer CF ↑</span>
+              <span class="stmt-effect">Finanzierungs-CF ↓</span>
+              <span class="stmt-effect">Gesamt-CF =</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout reveal" style="margin-top:2rem">
+    <div class="co-tag">Warum die Anpassung wichtig war</div>
+    <p>
+      Das Geschäft und die Zahlungsströme sind vor und nach IFRS 16 identisch — es
+      ändert sich allein die <strong>Darstellung</strong>. Doch Kreditklauseln
+      (Covenants), Ratings und die Bewertungsmodelle von Analysten laufen auf den
+      <em>berichteten</em> Zahlen. Ein Unternehmen mit hohem Operating-Leasing-Bestand
+      sah unter IAS 17 schlanker und solider aus, als es wirtschaftlich war. IFRS 16
+      schließt diese Transparenzlücke — und macht zwei wirtschaftlich gleiche
+      Unternehmen endlich vergleichbar.
+    </p>
+  </div>
+</section>
+
 <!-- ============================================================ THE LAB -->
 <section id="lab" class="tint">
   <div class="section-head reveal">
-    <span class="num">03</span>
+    <span class="num">04</span>
     <h2>Rechenlabor — selbst ausprobieren</h2>
   </div>
   <p class="section-intro reveal">
@@ -1010,7 +1368,7 @@
 
     <table class="amort" id="amTable">
       <thead>
-        <tr><th>Jahr</th><th>Anfangsbestand</th><th>Zins</th><th>Zahlung</th><th>Tilgung</th><th>Endbestand</th></tr>
+        <tr><th>Jahr</th><th>Anfangsbestand</th><th>Zins</th><th>Zahlung</th><th>Tilgung</th><th>Endbestand</th><th>Gesamtaufwand</th></tr>
       </thead>
       <tbody></tbody>
     </table>
@@ -1029,7 +1387,7 @@
 <!-- ============================================================ SUCCESSION -->
 <section id="succession">
   <div class="section-head reveal">
-    <span class="num">04</span>
+    <span class="num">05</span>
     <h2>IFRS 3 — wenn ein Unternehmen den Besitzer wechselt</h2>
   </div>
   <p class="section-intro reveal">
@@ -1117,7 +1475,7 @@
 <div class="quiz" id="quiz">
   <div class="quiz-inner">
     <div class="section-head reveal">
-      <span class="num">05</span>
+      <span class="num">06</span>
       <h2>Selbsttest</h2>
     </div>
     <p class="section-intro reveal">
@@ -1131,7 +1489,7 @@
 <!-- ============================================================ SOURCES -->
 <section id="sources">
   <div class="section-head reveal">
-    <span class="num">06</span>
+    <span class="num">07</span>
     <h2>Quellen &amp; Weiterlesen</h2>
   </div>
   <p class="section-intro reveal">
@@ -1231,16 +1589,20 @@ function recalc() {
   // table
   const tb = document.querySelector('#amTable tbody');
   tb.innerHTML = '';
+  let totalExp = 0;
   rows.forEach(r => {
+    const exp = r.dep + r.interest;
+    totalExp += exp;
     const tr = document.createElement('tr');
     tr.innerHTML = '<td>'+r.y+'</td><td>'+fmt(r.open)+'</td><td>'+fmt(r.interest)+
-      '</td><td>'+fmt(r.pay)+'</td><td>'+fmt(r.principal)+'</td><td>'+fmt(r.closing)+'</td>';
+      '</td><td>'+fmt(r.pay)+'</td><td>'+fmt(r.principal)+'</td><td>'+fmt(r.closing)+
+      '</td><td class="exp-col">'+fmt(exp)+'</td>';
     tb.appendChild(tr);
   });
   const sum = document.createElement('tr');
   sum.className = 'sum';
   sum.innerHTML = '<td>Σ</td><td>—</td><td>'+fmt(totalInt)+'</td><td>'+fmt(pay*term)+
-    '</td><td>'+fmt(pv)+'</td><td>0</td>';
+    '</td><td>'+fmt(pv)+'</td><td>0</td><td class="exp-col">'+fmt(totalExp)+'</td>';
   tb.appendChild(sum);
 
   // bars (total expense per year = dep + interest)
@@ -1283,6 +1645,83 @@ function recalc() {
 }
 [iPay, iTerm, iRate].forEach(el => el.addEventListener('input', recalc));
 recalc();
+
+/* ============================================================
+   BALANCE SHEET VISUALISER
+   Illustrative mid-sized supplier (EUR million):
+     IAS 17  : Assets 100 (PP&E) | Equity 40 + Liabilities 60
+     IFRS 16 : Assets 100 + RoU 12 = 112 | Equity 40 + Liab. 60 + Lease 12 = 112
+============================================================ */
+var BS_PXPERM = 3.0;   // pixels of bar height per EUR million
+
+function bsBlock(cls, label, value) {
+  return '<div class="bs-block ' + cls + '" style="height:' + (value * BS_PXPERM) + 'px">' +
+         '<span class="bs-label">' + label + '</span>' +
+         '<span class="bs-val">\u20AC ' + value + ' Mio.</span></div>';
+}
+
+function setBS(mode) {
+  var isIFRS = (mode === 'ifrs16');
+  document.getElementById('btnIAS17').classList.toggle('active', !isIFRS);
+  document.getElementById('btnIFRS16').classList.toggle('active', isIFRS);
+
+  var assetsEl = document.getElementById('bsAssets');
+  var liabEl   = document.getElementById('bsLiab');
+
+  // asset side (bottom-up via column-reverse: first item sits at the bottom)
+  var assetsHTML = bsBlock('assets', 'Sonstige Aktiva', 100);
+  if (isIFRS) assetsHTML += bsBlock('rou', 'Nutzungsrecht (neu)', 12);
+  assetsEl.innerHTML = assetsHTML;
+
+  // liability side
+  var liabHTML = bsBlock('liab', 'Verbindlichkeiten', 60) +
+                 bsBlock('equity', 'Eigenkapital', 40);
+  if (isIFRS) liabHTML += bsBlock('lease', 'Leasingverbindlichkeit (neu)', 12);
+  liabEl.innerHTML = liabHTML;
+
+  var total = isIFRS ? 112 : 100;
+  document.getElementById('bsAssetsTotal').textContent = 'Bilanzsumme: \u20AC ' + total + ' Mio.';
+  document.getElementById('bsLiabTotal').textContent   = 'Bilanzsumme: \u20AC ' + total + ' Mio.';
+
+  // metric chips
+  var eqRatio  = (40 / total) * 100;
+  var gearing  = ((total - 40) / 40) * 100;
+
+  document.getElementById('mTotal').textContent = '\u20AC ' + total + ' Mio.';
+  document.getElementById('mEqRatio').textContent = eqRatio.toFixed(1).replace('.', ',') + ' %';
+  document.getElementById('mGearing').textContent = gearing.toFixed(0) + ' %';
+
+  var dT  = document.getElementById('mTotalD');
+  var dE  = document.getElementById('mEqRatioD');
+  var dG  = document.getElementById('mGearingD');
+  var dA  = document.getElementById('mAssetIntD');
+
+  if (isIFRS) {
+    dT.textContent = '+ 12 Mio. (Bilanzverlängerung)'; dT.className = 'bs-chip-delta up';
+    dE.textContent = '\u2193 von 40,0 % \u2014 4,3 pp';      dE.className = 'bs-chip-delta down';
+    dG.textContent = '\u2191 von 150 % auf 180 %';          dG.className = 'bs-chip-delta up';
+    dA.textContent = 'Nutzungsrecht erhöht die Aktiva';     dA.className = 'bs-chip-delta up';
+    document.getElementById('mAssetInt').textContent = '\u2191';
+    document.getElementById('bsInsight').innerHTML =
+      'Beide Seiten der Bilanz wachsen um <strong>\u20AC 12 Mio.</strong> \u2014 den Barwert ' +
+      'der Leasingverpflichtungen. Das Eigenkapital bleibt unverändert bei \u20AC 40 Mio., ' +
+      'also <strong>sinkt die Eigenkapitalquote von 40,0 % auf 35,7 %</strong>. Auf dem Papier ' +
+      'wirkt das Unternehmen höher verschuldet \u2014 obwohl sich wirtschaftlich nichts geändert hat. ' +
+      'Genau das ist die <em>Bilanzverlängerung</em>.';
+  } else {
+    dT.textContent = 'Ausgangswert';        dT.className = 'bs-chip-delta flat';
+    dE.textContent = 'Ausgangswert';        dE.className = 'bs-chip-delta flat';
+    dG.textContent = 'Ausgangswert';        dG.className = 'bs-chip-delta flat';
+    dA.textContent = 'Operating-Leasing unsichtbar'; dA.className = 'bs-chip-delta flat';
+    document.getElementById('mAssetInt').textContent = '\u2014';
+    document.getElementById('bsInsight').innerHTML =
+      'Unter IAS 17 bleibt das Operating-Leasing <strong>unsichtbar</strong> \u2014 es taucht nur ' +
+      'als Mietaufwand in der GuV auf, nicht in der Bilanz. Die Bilanzsumme beträgt \u20AC 100 Mio., ' +
+      'die Eigenkapitalquote 40,0 %. Wechsle zu <strong>IFRS 16</strong> und beobachte, wie sich ' +
+      'die Bilanz auf beiden Seiten verlängert.';
+  }
+}
+setBS('ias17');
 
 /* ============================================================
    QUIZ
