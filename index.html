@@ -112,6 +112,44 @@
     nav .links { display: none; }
   }
 
+  /* language switcher */
+  nav .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+  }
+  .lang-switch {
+    display: flex;
+    gap: 0.3rem;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 0.2rem;
+    background: var(--paper-pure);
+  }
+  .lang-switch button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1;
+    padding: 0.32rem 0.5rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.32rem;
+    font-family: 'Spline Sans Mono', monospace;
+    font-weight: 500;
+    color: var(--navy-soft);
+    transition: background 0.2s, color 0.2s;
+  }
+  .lang-switch button .flag { font-size: 1.05rem; }
+  .lang-switch button .code { font-size: 0.72rem; letter-spacing: 0.04em; }
+  .lang-switch button:hover { background: rgba(30,39,97,0.06); }
+  .lang-switch button.active {
+    background: var(--navy);
+    color: var(--paper-pure);
+  }
+
   /* ============================================================
      HERO
   ============================================================ */
@@ -1015,36 +1053,46 @@
 <div id="progress"></div>
 
 <nav>
-  <div class="brand">IFRS <span>im Kontext</span></div>
-  <div class="links">
-    <a href="#bridge">Die Klammer</a>
-    <a href="#leasing">IFRS 16</a>
-    <a href="#bilanz">Die Bilanz</a>
-    <a href="#lab">Rechenlabor</a>
-    <a href="#succession">Nachfolge</a>
-    <a href="#quiz">Selbsttest</a>
-    <a href="#sources">Quellen</a>
+  <div class="brand">IFRS <span data-i18n="brandSuffix">im Kontext</span></div>
+  <div class="nav-right">
+    <div class="links">
+      <a href="#bridge" data-i18n="navBridge">Die Klammer</a>
+      <a href="#leasing" data-i18n="navLeasing">IFRS 16</a>
+      <a href="#bilanz" data-i18n="navBilanz">Die Bilanz</a>
+      <a href="#lab" data-i18n="navLab">Rechenlabor</a>
+      <a href="#succession" data-i18n="navSuccession">Nachfolge</a>
+      <a href="#quiz" data-i18n="navQuiz">Selbsttest</a>
+      <a href="#sources" data-i18n="navSources">Quellen</a>
+    </div>
+    <div class="lang-switch">
+      <button id="langDE" onclick="setLang('de')" aria-label="Deutsch">
+        <span class="flag">🇩🇪</span><span class="code">DE</span>
+      </button>
+      <button id="langEN" onclick="setLang('en')" aria-label="English">
+        <span class="flag">🇬🇧</span><span class="code">EN</span>
+      </button>
+    </div>
   </div>
 </nav>
 
 <!-- ============================================================ HERO -->
 <header class="hero">
   <div class="watermark">§</div>
-  <div class="eyebrow">Deep Dive · Weiterbildungsmodul für Studierende</div>
-  <h1>Wie ein Standard<br>die <em>Wahrheit</em><br>einer Bilanz formt.</h1>
-  <p class="lede">
+  <div class="eyebrow" data-i18n="heroEyebrow">Deep Dive · Weiterbildungsmodul für Studierende</div>
+  <h1 data-i18n-html="heroTitle">Wie ein Standard<br>die <em>Wahrheit</em><br>einer Bilanz formt.</h1>
+  <p class="lede" data-i18n="heroLede">
     Zwei Vorträge, eine gemeinsame Klammer: Internationale Rechnungslegung entscheidet,
     was in einer Bilanz sichtbar wird — bei einem geleasten Fahrzeug ebenso wie bei der
     Übernahme eines Familienunternehmens. Dieses Modul verbindet beide Welten und macht
     den roten Faden sichtbar.
   </p>
   <div class="meta">
-    <div><span>Kontext</span><strong>B.Sc. Technische BWL</strong></div>
-    <div><span>Niveau</span><strong>Grundlagen → Vertiefung</strong></div>
-    <div><span>Bearbeitung</span><strong>ca. 40 Minuten</strong></div>
-    <div><span>Autor</span><strong>Dr. Christian Neusser</strong></div>
+    <div><span data-i18n="heroMeta1L">Kontext</span><strong data-i18n="heroMeta1V">B.Sc. Technische BWL</strong></div>
+    <div><span data-i18n="heroMeta2L">Niveau</span><strong data-i18n="heroMeta2V">Grundlagen → Vertiefung</strong></div>
+    <div><span data-i18n="heroMeta3L">Bearbeitung</span><strong data-i18n="heroMeta3V">ca. 40 Minuten</strong></div>
+    <div><span data-i18n="heroMeta4L">Autor</span><strong data-i18n="heroMeta4V">Dr. Christian Neusser</strong></div>
   </div>
-  <div class="scroll-cue">↓ scrollen</div>
+  <div class="scroll-cue" data-i18n="heroScroll">↓ scrollen</div>
 </header>
 
 <!-- ============================================================ BRIDGE -->
@@ -1052,9 +1100,9 @@
   <div class="bridge-inner">
     <div class="section-head reveal">
       <span class="num">01</span>
-      <h2>Die gemeinsame Klammer</h2>
+      <h2 data-i18n="bridgeTitle">Die gemeinsame Klammer</h2>
     </div>
-    <p class="section-intro reveal">
+    <p class="section-intro reveal" data-i18n="bridgeIntro">
       Auf den ersten Blick haben ein Leasingvertrag über eine CNC-Maschine und die
       Nachfolge in einem Familienunternehmen wenig gemeinsam. Tatsächlich stellen beide
       dieselbe Grundfrage — und beide werden von der internationalen Rechnungslegung
@@ -1063,9 +1111,9 @@
 
     <div class="bridge-grid">
       <div class="bridge-card reveal">
-        <div class="tag">Vortrag 1 · IFRS 16</div>
-        <h3>Leasing</h3>
-        <p>
+        <div class="tag" data-i18n="bridgeCard1Tag">Vortrag 1 · IFRS 16</div>
+        <h3 data-i18n="bridgeCard1Title">Leasing</h3>
+        <p data-i18n="bridgeCard1Body">
           Ein Unternehmen nutzt einen Vermögenswert, ohne ihn zu besitzen.
           Frage: Gehört diese Nutzung in die Bilanz — und wenn ja, mit welchem Wert?
         </p>
@@ -1075,16 +1123,16 @@
         IFRS
       </div>
       <div class="bridge-card reveal">
-        <div class="tag">Vortrag 2 · IFRS 3</div>
-        <h3>Nachfolge</h3>
-        <p>
+        <div class="tag" data-i18n="bridgeCard2Tag">Vortrag 2 · IFRS 3</div>
+        <h3 data-i18n="bridgeCard2Title">Nachfolge</h3>
+        <p data-i18n="bridgeCard2Body">
           Ein Unternehmen wird übernommen. Frage: Wie wird der Kaufpreis auf
           Vermögenswerte verteilt — und was geschieht mit dem, was übrig bleibt?
         </p>
       </div>
     </div>
 
-    <div class="bridge-thesis reveal">
+    <div class="bridge-thesis reveal" data-i18n="bridgeThesis">
       Beide Standards lösen dasselbe Problem: Sie übersetzen wirtschaftliche Substanz
       in bilanzielle Form. „Substance over form" — der Inhalt zählt, nicht das Etikett.
     </div>
@@ -1095,9 +1143,9 @@
 <section id="leasing">
   <div class="section-head reveal">
     <span class="num">02</span>
-    <h2>IFRS 16 — Leasing sichtbar machen</h2>
+    <h2 data-i18n="leasingTitle">IFRS 16 — Leasing sichtbar machen</h2>
   </div>
-  <p class="section-intro reveal">
+  <p class="section-intro reveal" data-i18n="leasingIntro">
     Bis 2019 konnten Unternehmen riesige Verpflichtungen außerhalb der Bilanz halten.
     Eine Fluggesellschaft, die ihre Flotte least, sah schlanker aus als eine, die kaufte —
     obwohl beide wirtschaftlich gebunden waren. IFRS 16 hat das beendet.
@@ -1106,18 +1154,18 @@
   <div class="card-grid">
     <div class="concept reveal">
       <div class="marker">A</div>
-      <h3>Miete oder Leasing?</h3>
-      <p>
+      <h3 data-i18n="leasingCardA">Miete oder Leasing?</h3>
+      <p data-i18n-html="leasingCardABody">
         Im Alltag meint <em>Miete</em> das Kurzfristige und Flexible, <em>Leasing</em>
         das Langfristige und Vertragsfixierte. IFRS 16 kennt diese Unterscheidung
         gar nicht — der Standard fragt nur nach wirtschaftlicher Substanz.
       </p>
-      <span class="termtag">GRUNDBEGRIFF</span>
+      <span class="termtag" data-i18n="leasingCardATag">GRUNDBEGRIFF</span>
     </div>
     <div class="concept reveal">
       <div class="marker">B</div>
-      <h3>Der Identifikationstest</h3>
-      <p>
+      <h3 data-i18n="leasingCardB">Der Identifikationstest</h3>
+      <p data-i18n-html="leasingCardBBody">
         Ein Leasingverhältnis liegt vor, wenn das Recht zur Nutzung eines
         <em>identifizierten Vermögenswerts</em> für einen Zeitraum übertragen wird
         und der Nutzer diese Nutzung kontrolliert.
@@ -1127,26 +1175,26 @@
     <div class="concept reveal">
       <div class="marker">C</div>
       <h3>Right-of-Use Asset</h3>
-      <p>
+      <p data-i18n="leasingCardCBody">
         Das ökonomische Recht, den Vermögenswert über die Laufzeit zu nutzen.
         Es wird wie Eigentum aktiviert — auch ohne juristisches Eigentum.
       </p>
-      <span class="termtag">AKTIVSEITE</span>
+      <span class="termtag" data-i18n="leasingCardCTag">AKTIVSEITE</span>
     </div>
     <div class="concept reveal">
       <div class="marker">D</div>
       <h3>Lease Liability</h3>
-      <p>
+      <p data-i18n="leasingCardDBody">
         Die Verpflichtung zu künftigen Leasingzahlungen, bewertet mit dem
         Barwert. Diskontiert wird mit dem Grenzfremdkapitalzinssatz.
       </p>
-      <span class="termtag">PASSIVSEITE</span>
+      <span class="termtag" data-i18n="leasingCardDTag">PASSIVSEITE</span>
     </div>
   </div>
 
   <div class="callout reveal">
-    <div class="co-tag">Warum das zählt</div>
-    <p>
+    <div class="co-tag" data-i18n="leasingCalloutTag">Warum das zählt</div>
+    <p data-i18n-html="leasingCalloutBody">
       Bei der Erstanwendung 2019 wuchs die Bilanzsumme der Lufthansa um rund
       <strong>8 Milliarden Euro</strong>, die der Deutschen Post DHL um etwa
       <strong>5 Milliarden Euro</strong>. Das Geschäft blieb unverändert — nur seine
@@ -1160,9 +1208,9 @@
 <section id="bilanz">
   <div class="section-head reveal">
     <span class="num">03</span>
-    <h2>Die Bilanz — sichtbar verlängert</h2>
+    <h2 data-i18n="bilanzTitle">Die Bilanz — sichtbar verlängert</h2>
   </div>
-  <p class="section-intro reveal">
+  <p class="section-intro reveal" data-i18n-html="bilanzIntro">
     Der Kern von IFRS 16 lässt sich an der Bilanz ablesen. Ein neues Nutzungsrecht
     auf der Aktivseite, eine neue Leasingverbindlichkeit auf der Passivseite — beide
     Seiten wachsen um denselben Betrag. Das nennt man <em>Bilanzverlängerung</em>.
@@ -1171,14 +1219,14 @@
 
   <div class="bsheet-wrap reveal">
     <div class="bsheet-toggle">
-      <button id="btnIAS17" class="active" onclick="setBS('ias17')">Unter IAS 17</button>
-      <button id="btnIFRS16" onclick="setBS('ifrs16')">Unter IFRS 16</button>
+      <button id="btnIAS17" class="active" onclick="setBS('ias17')" data-i18n="bsBtnIAS">Unter IAS 17</button>
+      <button id="btnIFRS16" onclick="setBS('ifrs16')" data-i18n="bsBtnIFRS">Unter IFRS 16</button>
     </div>
 
     <div class="bsheet-stage">
       <!-- ASSET SIDE -->
       <div class="bs-col">
-        <div class="bs-caption">Aktiva — Mittelverwendung</div>
+        <div class="bs-caption" data-i18n="bsCapAssets">Aktiva — Mittelverwendung</div>
         <div class="bs-graphic">
           <div class="bs-side" id="bsAssets"></div>
         </div>
@@ -1186,7 +1234,7 @@
       </div>
       <!-- LIABILITY SIDE -->
       <div class="bs-col after">
-        <div class="bs-caption">Passiva — Mittelherkunft</div>
+        <div class="bs-caption" data-i18n="bsCapLiab">Passiva — Mittelherkunft</div>
         <div class="bs-graphic">
           <div class="bs-side" id="bsLiab"></div>
         </div>
@@ -1196,29 +1244,29 @@
 
     <div class="bs-metrics">
       <div class="bs-chip">
-        <div class="bs-chip-label">Bilanzsumme</div>
+        <div class="bs-chip-label" data-i18n="bsChip1L">Bilanzsumme</div>
         <div class="bs-chip-val" id="mTotal">€ 100 Mio.</div>
         <div class="bs-chip-delta flat" id="mTotalD">Ausgangswert</div>
       </div>
       <div class="bs-chip">
-        <div class="bs-chip-label">Eigenkapitalquote</div>
+        <div class="bs-chip-label" data-i18n="bsChip2L">Eigenkapitalquote</div>
         <div class="bs-chip-val" id="mEqRatio">40,0 %</div>
         <div class="bs-chip-delta flat" id="mEqRatioD">Ausgangswert</div>
       </div>
       <div class="bs-chip">
-        <div class="bs-chip-label">Verschuldungsgrad</div>
+        <div class="bs-chip-label" data-i18n="bsChip3L">Verschuldungsgrad</div>
         <div class="bs-chip-val" id="mGearing">150 %</div>
         <div class="bs-chip-delta flat" id="mGearingD">Ausgangswert</div>
       </div>
       <div class="bs-chip">
-        <div class="bs-chip-label">Anlageintensität</div>
+        <div class="bs-chip-label" data-i18n="bsChip4L">Anlageintensität</div>
         <div class="bs-chip-val" id="mAssetInt">—</div>
         <div class="bs-chip-delta flat" id="mAssetIntD">RoU erhöht Aktiva</div>
       </div>
     </div>
 
     <div class="callout" style="margin-top:1.8rem">
-      <div class="co-tag">Beobachtung</div>
+      <div class="co-tag" data-i18n="bsObsTag">Beobachtung</div>
       <p id="bsInsight">
         Unter IAS 17 bleibt das Operating-Leasing unsichtbar — die Bilanz ist „kurz".
         Wechsle zu IFRS 16 und beobachte, wie beide Seiten um den Barwert der
@@ -1227,7 +1275,7 @@
     </div>
   </div>
 
-  <p class="section-intro reveal" style="margin-top:3rem;margin-bottom:1.5rem">
+  <p class="section-intro reveal" style="margin-top:3rem;margin-bottom:1.5rem" data-i18n-html="bilanzStmtIntro">
     Die Bilanzverlängerung ist nur der Anfang. IFRS 16 verändert <em>jedes</em> der drei
     Rechenwerke — Bilanz, Gewinn- und Verlustrechnung und Kapitalflussrechnung.
     Die folgende Übersicht stellt die alte und die neue Welt direkt gegenüber.
@@ -1237,19 +1285,19 @@
     <table class="stmt-table">
       <thead>
         <tr>
-          <th class="h-stmt">Rechenwerk</th>
-          <th class="h-old">Unter IAS 17 (alt)</th>
-          <th class="h-new">Unter IFRS 16 (neu)</th>
+          <th class="h-stmt" data-i18n="stmtHStmt">Rechenwerk</th>
+          <th class="h-old" data-i18n="stmtHOld">Unter IAS 17 (alt)</th>
+          <th class="h-new" data-i18n="stmtHNew">Unter IFRS 16 (neu)</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="c-stmt">Bilanz</td>
-          <td class="c-old">
+          <td class="c-stmt" data-i18n="stmtR1Name">Bilanz</td>
+          <td class="c-old" data-i18n-html="stmtR1Old">
             Operating-Leasing erscheint <em>nicht</em> in der Bilanz. Es existiert nur
             ein Mietaufwand in der GuV. Die Bilanz bleibt kurz.
           </td>
-          <td class="c-new">
+          <td class="c-new" data-i18n-html="stmtR1New">
             <strong>Nutzungsrecht und Leasingverbindlichkeit werden angesetzt.</strong>
             Die Bilanz verlängert sich auf beiden Seiten.
             <div style="margin-top:0.5rem">
@@ -1260,12 +1308,12 @@
           </td>
         </tr>
         <tr>
-          <td class="c-stmt">GuV</td>
-          <td class="c-old">
+          <td class="c-stmt" data-i18n="stmtR2Name">GuV</td>
+          <td class="c-old" data-i18n-html="stmtR2Old">
             Ein konstanter Mietaufwand pro Jahr (z. B. € 50.000), erfasst als
             operativer Aufwand oberhalb des EBIT.
           </td>
-          <td class="c-new">
+          <td class="c-new" data-i18n-html="stmtR2New">
             <strong>Zwei Aufwendungen:</strong> Abschreibung (konstant) plus Zinsaufwand
             (fallend). Der Gesamtaufwand ist <em>front-loaded</em>.
             <div style="margin-top:0.5rem">
@@ -1276,11 +1324,11 @@
           </td>
         </tr>
         <tr>
-          <td class="c-stmt">Kapitalfluss&shy;rechnung</td>
-          <td class="c-old">
+          <td class="c-stmt" data-i18n-html="stmtR3Name">Kapitalfluss&shy;rechnung</td>
+          <td class="c-old" data-i18n-html="stmtR3Old">
             Die gesamte Leasingzahlung steckt im operativen Cashflow.
           </td>
-          <td class="c-new">
+          <td class="c-new" data-i18n-html="stmtR3New">
             <strong>Aufteilung:</strong> Der Tilgungsanteil wandert in den
             Finanzierungs-Cashflow, nur der Zinsanteil bleibt (je nach Wahlrecht) operativ.
             <div style="margin-top:0.5rem">
@@ -1295,8 +1343,8 @@
   </div>
 
   <div class="callout reveal" style="margin-top:2rem">
-    <div class="co-tag">Warum die Anpassung wichtig war</div>
-    <p>
+    <div class="co-tag" data-i18n="bilanzWhyTag">Warum die Anpassung wichtig war</div>
+    <p data-i18n-html="bilanzWhyBody">
       Das Geschäft und die Zahlungsströme sind vor und nach IFRS 16 identisch — es
       ändert sich allein die <strong>Darstellung</strong>. Doch Kreditklauseln
       (Covenants), Ratings und die Bewertungsmodelle von Analysten laufen auf den
@@ -1312,9 +1360,9 @@
 <section id="lab" class="tint">
   <div class="section-head reveal">
     <span class="num">04</span>
-    <h2>Rechenlabor — selbst ausprobieren</h2>
+    <h2 data-i18n="labTitle">Rechenlabor — selbst ausprobieren</h2>
   </div>
-  <p class="section-intro reveal">
+  <p class="section-intro reveal" data-i18n="labIntro">
     Theorie wird greifbar, wenn man mit den Zahlen spielt. Verändere die Parameter
     eines Leasingvertrags und beobachte, wie sich Barwert, Amortisation und der
     typische „front-loading"-Effekt verschieben.
@@ -1323,20 +1371,20 @@
   <div class="lab reveal">
     <div class="lab-head">
       <span class="dot"></span>
-      <span>Interaktives Modell · CNC-Maschine</span>
+      <span data-i18n="labModelTag">Interaktives Modell · CNC-Maschine</span>
     </div>
 
     <div class="controls">
       <div class="control">
-        <label>Jährliche Zahlung <span class="val" id="vPay">€ 50.000</span></label>
+        <label><span data-i18n="labCtrlPay">Jährliche Zahlung</span> <span class="val" id="vPay">€ 50.000</span></label>
         <input type="range" id="iPay" min="10000" max="120000" step="5000" value="50000">
       </div>
       <div class="control">
-        <label>Laufzeit <span class="val" id="vTerm">5 Jahre</span></label>
+        <label><span data-i18n="labCtrlTerm">Laufzeit</span> <span class="val" id="vTerm">5 Jahre</span></label>
         <input type="range" id="iTerm" min="2" max="12" step="1" value="5">
       </div>
       <div class="control">
-        <label>Zinssatz (IBR) <span class="val" id="vRate">5,0 %</span></label>
+        <label><span data-i18n="labCtrlRate">Zinssatz (IBR)</span> <span class="val" id="vRate">5,0 %</span></label>
         <input type="range" id="iRate" min="1" max="12" step="0.5" value="5">
       </div>
     </div>
@@ -1344,37 +1392,45 @@
     <div class="lab-result">
       <div class="stat">
         <div class="figure" id="oPV">€ 216.474</div>
-        <div class="label">Barwert / RoU-Asset</div>
+        <div class="label" data-i18n="labStatPV">Barwert / RoU-Asset</div>
       </div>
       <div class="stat">
         <div class="figure" id="oInt">€ 33.526</div>
-        <div class="label">Σ Zinsaufwand</div>
+        <div class="label" data-i18n="labStatInt">Σ Zinsaufwand</div>
       </div>
       <div class="stat">
         <div class="figure" id="oCash">€ 250.000</div>
-        <div class="label">Σ Cash-Zahlungen</div>
+        <div class="label" data-i18n="labStatCash">Σ Cash-Zahlungen</div>
       </div>
       <div class="stat">
         <div class="figure" id="oDep">€ 43.295</div>
-        <div class="label">Abschreibung p.a.</div>
+        <div class="label" data-i18n="labStatDep">Abschreibung p.a.</div>
       </div>
     </div>
 
     <div class="bars" id="bars"></div>
     <div class="legend">
-      <span><i style="background:var(--navy)"></i>Abschreibung (konstant)</span>
-      <span><i style="background:var(--gold-soft)"></i>Zinsaufwand (fallend)</span>
+      <span><i style="background:var(--navy)"></i><span data-i18n="labLegDep">Abschreibung (konstant)</span></span>
+      <span><i style="background:var(--gold-soft)"></i><span data-i18n="labLegInt">Zinsaufwand (fallend)</span></span>
     </div>
 
     <table class="amort" id="amTable">
       <thead>
-        <tr><th>Jahr</th><th>Anfangsbestand</th><th>Zins</th><th>Zahlung</th><th>Tilgung</th><th>Endbestand</th><th>Gesamtaufwand</th></tr>
+        <tr>
+          <th data-i18n="labThYear">Jahr</th>
+          <th data-i18n="labThOpen">Anfangsbestand</th>
+          <th data-i18n="labThInt">Zins</th>
+          <th data-i18n="labThPay">Zahlung</th>
+          <th data-i18n="labThPrin">Tilgung</th>
+          <th data-i18n="labThClose">Endbestand</th>
+          <th data-i18n="labThExp">Gesamtaufwand</th>
+        </tr>
       </thead>
       <tbody></tbody>
     </table>
 
     <div class="callout" style="margin-top:1.8rem">
-      <div class="co-tag">Beobachtung</div>
+      <div class="co-tag" data-i18n="labObsTag">Beobachtung</div>
       <p id="labInsight">
         Die Summe aller Aufwendungen entspricht exakt den Cash-Zahlungen. IFRS 16
         erzeugt keinen Mehraufwand — es verschiebt nur das Timing. Der Gesamtaufwand
@@ -1388,9 +1444,9 @@
 <section id="succession">
   <div class="section-head reveal">
     <span class="num">05</span>
-    <h2>IFRS 3 — wenn ein Unternehmen den Besitzer wechselt</h2>
+    <h2 data-i18n="succTitle">IFRS 3 — wenn ein Unternehmen den Besitzer wechselt</h2>
   </div>
-  <p class="section-intro reveal">
+  <p class="section-intro reveal" data-i18n="succIntro">
     Eine Unternehmensnachfolge ist nicht nur ein Führungs- und Kulturthema. Sobald
     ein Familienunternehmen extern übernommen wird, entsteht ein bilanzielles Ereignis —
     geregelt durch IFRS 3. Hier zeigt sich dieselbe Logik wie bei IFRS 16: Wirtschaftliche
@@ -1399,69 +1455,69 @@
 
   <div class="split reveal">
     <div class="split-pane before">
-      <div class="ptag">Vor der Nachfolge</div>
-      <h3>Familien-typische Passivseite</h3>
+      <div class="ptag" data-i18n="succBeforeTag">Vor der Nachfolge</div>
+      <h3 data-i18n="succBeforeTitle">Familien-typische Passivseite</h3>
       <ul>
-        <li>Eigenkapital der Familie</li>
-        <li>Gesellschafterdarlehen, nachrangig und flexibel</li>
-        <li>Langjährige Hausbank-Beziehung</li>
-        <li>Fördermittel (KfW, L-Bank)</li>
-        <li>Geringe externe Reporting-Anforderungen</li>
+        <li data-i18n="succBefore1">Eigenkapital der Familie</li>
+        <li data-i18n="succBefore2">Gesellschafterdarlehen, nachrangig und flexibel</li>
+        <li data-i18n="succBefore3">Langjährige Hausbank-Beziehung</li>
+        <li data-i18n="succBefore4">Fördermittel (KfW, L-Bank)</li>
+        <li data-i18n="succBefore5">Geringe externe Reporting-Anforderungen</li>
       </ul>
     </div>
     <div class="split-pane after">
-      <div class="ptag">Nach externer Nachfolge</div>
-      <h3>Institutionalisierter Mix</h3>
+      <div class="ptag" data-i18n="succAfterTag">Nach externer Nachfolge</div>
+      <h3 data-i18n="succAfterTitle">Institutionalisierter Mix</h3>
       <ul>
-        <li>Akquisitionsfinanzierung mit Covenants</li>
-        <li>Mezzanine-Kapital</li>
-        <li>Private Equity als Co-Investor</li>
-        <li>Earn-Out gegenüber der Alt-Inhaberfamilie</li>
-        <li>Umfangreiches monatliches Reporting</li>
+        <li data-i18n="succAfter1">Akquisitionsfinanzierung mit Covenants</li>
+        <li data-i18n="succAfter2">Mezzanine-Kapital</li>
+        <li data-i18n="succAfter3">Private Equity als Co-Investor</li>
+        <li data-i18n="succAfter4">Earn-Out gegenüber der Alt-Inhaberfamilie</li>
+        <li data-i18n="succAfter5">Umfangreiches monatliches Reporting</li>
       </ul>
     </div>
   </div>
 
-  <h3 style="font-family:'Fraunces',serif;font-size:1.5rem;color:var(--navy);margin:3rem 0 1.5rem">
+  <h3 style="font-family:'Fraunces',serif;font-size:1.5rem;color:var(--navy);margin:3rem 0 1.5rem" data-i18n="succMechHead">
     Drei Mechanismen, die die Bilanz verändern
   </h3>
 
   <div class="timeline reveal">
     <div class="tl-item">
-      <div class="tl-phase">Mechanismus 1</div>
-      <h3>Kaufpreisallokation &amp; Goodwill</h3>
-      <p>
+      <div class="tl-phase" data-i18n="succM1Phase">Mechanismus 1</div>
+      <h3 data-i18n="succM1Title">Kaufpreisallokation &amp; Goodwill</h3>
+      <p data-i18n="succM1Body">
         Der Kaufpreis wird auf identifizierbare Vermögenswerte verteilt — auch auf
         immaterielle wie Marke und Kundenbeziehungen. Was übrig bleibt, wird Goodwill.
         Eine 150-jährige Familientradition wird so zur bilanziellen Residualgröße.
       </p>
-      <div class="lit">Anschluss: IFRS 3 · IAS 36 Impairment-Test · Glaum et al. (2018)</div>
+      <div class="lit" data-i18n="succM1Lit">Anschluss: IFRS 3 · IAS 36 Impairment-Test · Glaum et al. (2018)</div>
     </div>
     <div class="tl-item">
-      <div class="tl-phase">Mechanismus 2</div>
-      <h3>Finanzierungsmix-Shift</h3>
-      <p>
+      <div class="tl-phase" data-i18n="succM2Phase">Mechanismus 2</div>
+      <h3 data-i18n="succM2Title">Finanzierungsmix-Shift</h3>
+      <p data-i18n="succM2Body">
         Die Passivseite kehrt sich um: vom beziehungsbasierten Modell zum
         vertragsbasierten Modell. Rechnungswesen wird Governance-relevant, weil
         Covenants und Reporting-Pflichten greifen.
       </p>
-      <div class="lit">Anschluss: Pecking Order (Myers 1984) · Croci et al. (2011)</div>
+      <div class="lit" data-i18n="succM2Lit">Anschluss: Pecking Order (Myers 1984) · Croci et al. (2011)</div>
     </div>
     <div class="tl-item">
-      <div class="tl-phase">Mechanismus 3</div>
-      <h3>Bilanzpolitische Gestaltung</h3>
-      <p>
+      <div class="tl-phase" data-i18n="succM3Phase">Mechanismus 3</div>
+      <h3 data-i18n="succM3Title">Bilanzpolitische Gestaltung</h3>
+      <p data-i18n="succM3Body">
         Neue Eigentümer nutzen Gestaltungsspielräume zum Signaling: Big-Bath-Effekte
         schaffen einen niedrigen Startpunkt, strategisches Goodwill-Impairment
         distanziert von der Alt-Strategie.
       </p>
-      <div class="lit">Anschluss: Healy &amp; Wahlen (1999) · Legitimitätstheorie (Suchman 1995)</div>
+      <div class="lit" data-i18n="succM3Lit">Anschluss: Healy &amp; Wahlen (1999) · Legitimitätstheorie (Suchman 1995)</div>
     </div>
   </div>
 
   <div class="callout reveal">
-    <div class="co-tag">Die Verbindung zu IFRS 16</div>
-    <p>
+    <div class="co-tag" data-i18n="succLinkTag">Die Verbindung zu IFRS 16</div>
+    <p data-i18n-html="succLinkBody">
       In beiden Fällen geht es um Bewertung unter Unsicherheit. Bei IFRS 16 ist der
       <strong>Diskontierungssatz</strong> die kritische Schätzung; bei IFRS 3 ist es der
       <strong>Fair Value</strong> immaterieller Vermögenswerte. Beide Standards geben dem
@@ -1476,9 +1532,9 @@
   <div class="quiz-inner">
     <div class="section-head reveal">
       <span class="num">06</span>
-      <h2>Selbsttest</h2>
+      <h2 data-i18n="quizTitle">Selbsttest</h2>
     </div>
-    <p class="section-intro reveal">
+    <p class="section-intro reveal" data-i18n="quizIntro">
       Fünf Fragen, um das Verständnis zu prüfen. Klick auf die Antwort, die du für
       richtig hältst — die Erklärung erscheint sofort.
     </p>
@@ -1490,24 +1546,24 @@
 <section id="sources">
   <div class="section-head reveal">
     <span class="num">07</span>
-    <h2>Quellen &amp; Weiterlesen</h2>
+    <h2 data-i18n="srcTitle">Quellen &amp; Weiterlesen</h2>
   </div>
-  <p class="section-intro reveal">
+  <p class="section-intro reveal" data-i18n="srcIntro">
     Wer tiefer einsteigen möchte, findet hier die zentralen Standardtexte,
     Lehrbücher und wissenschaftlichen Arbeiten — geordnet nach Einstiegsniveau.
   </p>
 
-  <h3 style="font-family:'Fraunces',serif;color:var(--navy);font-size:1.2rem;margin-bottom:1rem">
+  <h3 style="font-family:'Fraunces',serif;color:var(--navy);font-size:1.2rem;margin-bottom:1rem" data-i18n="srcGroup1">
     Standards &amp; Praxisliteratur
   </h3>
   <div class="sources-list reveal" style="margin-bottom:2.5rem">
-    <div class="source"><strong>IFRS Foundation (2024).</strong> IFRS 16 Leases &amp; IFRS 3 Business Combinations. <span>Standardtexte, ifrs.org</span></div>
-    <div class="source"><strong>BDO (2024).</strong> IFRS Accounting Standards in Practice — IFRS 16. <span>Frei verfügbar, gut für den Einstieg</span></div>
-    <div class="source"><strong>Pellens, Fülbier, Gassen, Sellhorn (2021).</strong> Internationale Rechnungslegung. 11. Aufl. <span>Deutschsprachiges Standardlehrbuch</span></div>
-    <div class="source"><strong>Deloitte.</strong> iasplus.com <span>Kostenlose Standardzusammenfassungen</span></div>
+    <div class="source"><strong>IFRS Foundation (2024).</strong> IFRS 16 Leases &amp; IFRS 3 Business Combinations. <span data-i18n="src1Note">Standardtexte, ifrs.org</span></div>
+    <div class="source"><strong>BDO (2024).</strong> IFRS Accounting Standards in Practice — IFRS 16. <span data-i18n="src2Note">Frei verfügbar, gut für den Einstieg</span></div>
+    <div class="source"><strong>Pellens, Fülbier, Gassen, Sellhorn (2021).</strong> Internationale Rechnungslegung. 11. Aufl. <span data-i18n="src3Note">Deutschsprachiges Standardlehrbuch</span></div>
+    <div class="source"><strong>Deloitte.</strong> iasplus.com <span data-i18n="src4Note">Kostenlose Standardzusammenfassungen</span></div>
   </div>
 
-  <h3 style="font-family:'Fraunces',serif;color:var(--navy);font-size:1.2rem;margin-bottom:1rem">
+  <h3 style="font-family:'Fraunces',serif;color:var(--navy);font-size:1.2rem;margin-bottom:1rem" data-i18n="srcGroup2">
     Wissenschaftliche Vertiefung
   </h3>
   <div class="sources-list reveal">
@@ -1521,16 +1577,316 @@
 </section>
 
 <footer>
-  <div class="fbrand">IFRS <span>im Kontext</span></div>
-  <p>
+  <div class="fbrand">IFRS <span data-i18n="brandSuffix">im Kontext</span></div>
+  <p data-i18n="footerText">
     Ein Weiterbildungsmodul, das zwei Probevorträge zu einem zusammenhängenden
     Lernpfad verbindet — von der Leasingbilanzierung bis zur Unternehmensnachfolge.
   </p>
-  <p>Erstellt als Begleitmaterial · Dr. Christian Neusser · Hochschule Esslingen</p>
+  <p data-i18n="footerCredit">Erstellt als Begleitmaterial · Dr. Christian Neusser · Hochschule Esslingen</p>
   <div class="fmeta">SUBSTANCE OVER FORM · 2026</div>
 </footer>
 
 <script>
+/* ============================================================
+   INTERNATIONALISATION (DE / EN)
+============================================================ */
+const I18N = {
+  de: {
+    htmlLang: "de",
+    brandSuffix: "im Kontext",
+    navBridge: "Die Klammer", navLeasing: "IFRS 16", navBilanz: "Die Bilanz",
+    navLab: "Rechenlabor", navSuccession: "Nachfolge", navQuiz: "Selbsttest", navSources: "Quellen",
+
+    heroEyebrow: "Deep Dive · Weiterbildungsmodul für Studierende",
+    heroTitle: "Wie ein Standard<br>die <em>Wahrheit</em><br>einer Bilanz formt.",
+    heroLede: "Zwei Vorträge, eine gemeinsame Klammer: Internationale Rechnungslegung entscheidet, was in einer Bilanz sichtbar wird — bei einem geleasten Fahrzeug ebenso wie bei der Übernahme eines Familienunternehmens. Dieses Modul verbindet beide Welten und macht den roten Faden sichtbar.",
+    heroMeta1L: "Kontext", heroMeta1V: "B.Sc. Technische BWL",
+    heroMeta2L: "Niveau", heroMeta2V: "Grundlagen → Vertiefung",
+    heroMeta3L: "Bearbeitung", heroMeta3V: "ca. 40 Minuten",
+    heroMeta4L: "Autor", heroMeta4V: "Dr. Christian Neusser",
+    heroScroll: "↓ scrollen",
+
+    bridgeTitle: "Die gemeinsame Klammer",
+    bridgeIntro: "Auf den ersten Blick haben ein Leasingvertrag über eine CNC-Maschine und die Nachfolge in einem Familienunternehmen wenig gemeinsam. Tatsächlich stellen beide dieselbe Grundfrage — und beide werden von der internationalen Rechnungslegung beantwortet.",
+    bridgeCard1Tag: "Vortrag 1 · IFRS 16", bridgeCard1Title: "Leasing",
+    bridgeCard1Body: "Ein Unternehmen nutzt einen Vermögenswert, ohne ihn zu besitzen. Frage: Gehört diese Nutzung in die Bilanz — und wenn ja, mit welchem Wert?",
+    bridgeCard2Tag: "Vortrag 2 · IFRS 3", bridgeCard2Title: "Nachfolge",
+    bridgeCard2Body: "Ein Unternehmen wird übernommen. Frage: Wie wird der Kaufpreis auf Vermögenswerte verteilt — und was geschieht mit dem, was übrig bleibt?",
+    bridgeThesis: "Beide Standards lösen dasselbe Problem: Sie übersetzen wirtschaftliche Substanz in bilanzielle Form. „Substance over form\" — der Inhalt zählt, nicht das Etikett.",
+
+    leasingTitle: "IFRS 16 — Leasing sichtbar machen",
+    leasingIntro: "Bis 2019 konnten Unternehmen riesige Verpflichtungen außerhalb der Bilanz halten. Eine Fluggesellschaft, die ihre Flotte least, sah schlanker aus als eine, die kaufte — obwohl beide wirtschaftlich gebunden waren. IFRS 16 hat das beendet.",
+    leasingCardA: "Miete oder Leasing?",
+    leasingCardABody: "Im Alltag meint <em>Miete</em> das Kurzfristige und Flexible, <em>Leasing</em> das Langfristige und Vertragsfixierte. IFRS 16 kennt diese Unterscheidung gar nicht — der Standard fragt nur nach wirtschaftlicher Substanz.",
+    leasingCardATag: "GRUNDBEGRIFF",
+    leasingCardB: "Der Identifikationstest",
+    leasingCardBBody: "Ein Leasingverhältnis liegt vor, wenn das Recht zur Nutzung eines <em>identifizierten Vermögenswerts</em> für einen Zeitraum übertragen wird und der Nutzer diese Nutzung kontrolliert.",
+    leasingCardCBody: "Das ökonomische Recht, den Vermögenswert über die Laufzeit zu nutzen. Es wird wie Eigentum aktiviert — auch ohne juristisches Eigentum.",
+    leasingCardCTag: "AKTIVSEITE",
+    leasingCardDBody: "Die Verpflichtung zu künftigen Leasingzahlungen, bewertet mit dem Barwert. Diskontiert wird mit dem Grenzfremdkapitalzinssatz.",
+    leasingCardDTag: "PASSIVSEITE",
+    leasingCalloutTag: "Warum das zählt",
+    leasingCalloutBody: "Bei der Erstanwendung 2019 wuchs die Bilanzsumme der Lufthansa um rund <strong>8 Milliarden Euro</strong>, die der Deutschen Post DHL um etwa <strong>5 Milliarden Euro</strong>. Das Geschäft blieb unverändert — nur seine bilanzielle Darstellung verschob sich. Genau deshalb mussten Unternehmen damals mit ihren Banken über Kreditklauseln neu verhandeln.",
+
+    bilanzTitle: "Die Bilanz — sichtbar verlängert",
+    bilanzIntro: "Der Kern von IFRS 16 lässt sich an der Bilanz ablesen. Ein neues Nutzungsrecht auf der Aktivseite, eine neue Leasingverbindlichkeit auf der Passivseite — beide Seiten wachsen um denselben Betrag. Das nennt man <em>Bilanzverlängerung</em>. Klicke unten zwischen den beiden Standards hin und her.",
+    bsBtnIAS: "Unter IAS 17", bsBtnIFRS: "Unter IFRS 16",
+    bsCapAssets: "Aktiva — Mittelverwendung", bsCapLiab: "Passiva — Mittelherkunft",
+    bsChip1L: "Bilanzsumme", bsChip2L: "Eigenkapitalquote", bsChip3L: "Verschuldungsgrad", bsChip4L: "Anlageintensität",
+    bsObsTag: "Beobachtung",
+    bilanzStmtIntro: "Die Bilanzverlängerung ist nur der Anfang. IFRS 16 verändert <em>jedes</em> der drei Rechenwerke — Bilanz, Gewinn- und Verlustrechnung und Kapitalflussrechnung. Die folgende Übersicht stellt die alte und die neue Welt direkt gegenüber.",
+    stmtHStmt: "Rechenwerk", stmtHOld: "Unter IAS 17 (alt)", stmtHNew: "Unter IFRS 16 (neu)",
+    stmtR1Name: "Bilanz",
+    stmtR1Old: "Operating-Leasing erscheint <em>nicht</em> in der Bilanz. Es existiert nur ein Mietaufwand in der GuV. Die Bilanz bleibt kurz.",
+    stmtR1New: "<strong>Nutzungsrecht und Leasingverbindlichkeit werden angesetzt.</strong> Die Bilanz verlängert sich auf beiden Seiten.<div style=\"margin-top:0.5rem\"><span class=\"stmt-effect\">Aktiva ↑</span> <span class=\"stmt-effect\">Verschuldung ↑</span> <span class=\"stmt-effect\">EK-Quote ↓</span></div>",
+    stmtR2Name: "GuV",
+    stmtR2Old: "Ein konstanter Mietaufwand pro Jahr (z. B. € 50.000), erfasst als operativer Aufwand oberhalb des EBIT.",
+    stmtR2New: "<strong>Zwei Aufwendungen:</strong> Abschreibung (konstant) plus Zinsaufwand (fallend). Der Gesamtaufwand ist <em>front-loaded</em>.<div style=\"margin-top:0.5rem\"><span class=\"stmt-effect\">EBITDA ↑</span> <span class=\"stmt-effect\">EBIT ≈</span> <span class=\"stmt-effect\">frühes Ergebnis ↓</span></div>",
+    stmtR3Name: "Kapitalfluss&shy;rechnung",
+    stmtR3Old: "Die gesamte Leasingzahlung steckt im operativen Cashflow.",
+    stmtR3New: "<strong>Aufteilung:</strong> Der Tilgungsanteil wandert in den Finanzierungs-Cashflow, nur der Zinsanteil bleibt (je nach Wahlrecht) operativ.<div style=\"margin-top:0.5rem\"><span class=\"stmt-effect\">operativer CF ↑</span> <span class=\"stmt-effect\">Finanzierungs-CF ↓</span> <span class=\"stmt-effect\">Gesamt-CF =</span></div>",
+    bilanzWhyTag: "Warum die Anpassung wichtig war",
+    bilanzWhyBody: "Das Geschäft und die Zahlungsströme sind vor und nach IFRS 16 identisch — es ändert sich allein die <strong>Darstellung</strong>. Doch Kreditklauseln (Covenants), Ratings und die Bewertungsmodelle von Analysten laufen auf den <em>berichteten</em> Zahlen. Ein Unternehmen mit hohem Operating-Leasing-Bestand sah unter IAS 17 schlanker und solider aus, als es wirtschaftlich war. IFRS 16 schließt diese Transparenzlücke — und macht zwei wirtschaftlich gleiche Unternehmen endlich vergleichbar.",
+
+    labTitle: "Rechenlabor — selbst ausprobieren",
+    labIntro: "Theorie wird greifbar, wenn man mit den Zahlen spielt. Verändere die Parameter eines Leasingvertrags und beobachte, wie sich Barwert, Amortisation und der typische „front-loading\"-Effekt verschieben.",
+    labModelTag: "Interaktives Modell · CNC-Maschine",
+    labCtrlPay: "Jährliche Zahlung", labCtrlTerm: "Laufzeit", labCtrlRate: "Zinssatz (IBR)",
+    labStatPV: "Barwert / RoU-Asset", labStatInt: "Σ Zinsaufwand", labStatCash: "Σ Cash-Zahlungen", labStatDep: "Abschreibung p.a.",
+    labLegDep: "Abschreibung (konstant)", labLegInt: "Zinsaufwand (fallend)",
+    labThYear: "Jahr", labThOpen: "Anfangsbestand", labThInt: "Zins", labThPay: "Zahlung",
+    labThPrin: "Tilgung", labThClose: "Endbestand", labThExp: "Gesamtaufwand",
+    labObsTag: "Beobachtung",
+    labYearsUnit: "Jahre", labYearAbbr: "J",
+
+    succTitle: "IFRS 3 — wenn ein Unternehmen den Besitzer wechselt",
+    succIntro: "Eine Unternehmensnachfolge ist nicht nur ein Führungs- und Kulturthema. Sobald ein Familienunternehmen extern übernommen wird, entsteht ein bilanzielles Ereignis — geregelt durch IFRS 3. Hier zeigt sich dieselbe Logik wie bei IFRS 16: Wirtschaftliche Substanz muss in bilanzielle Form übersetzt werden.",
+    succBeforeTag: "Vor der Nachfolge", succBeforeTitle: "Familien-typische Passivseite",
+    succBefore1: "Eigenkapital der Familie",
+    succBefore2: "Gesellschafterdarlehen, nachrangig und flexibel",
+    succBefore3: "Langjährige Hausbank-Beziehung",
+    succBefore4: "Fördermittel (KfW, L-Bank)",
+    succBefore5: "Geringe externe Reporting-Anforderungen",
+    succAfterTag: "Nach externer Nachfolge", succAfterTitle: "Institutionalisierter Mix",
+    succAfter1: "Akquisitionsfinanzierung mit Covenants",
+    succAfter2: "Mezzanine-Kapital",
+    succAfter3: "Private Equity als Co-Investor",
+    succAfter4: "Earn-Out gegenüber der Alt-Inhaberfamilie",
+    succAfter5: "Umfangreiches monatliches Reporting",
+    succMechHead: "Drei Mechanismen, die die Bilanz verändern",
+    succM1Phase: "Mechanismus 1", succM1Title: "Kaufpreisallokation & Goodwill",
+    succM1Body: "Der Kaufpreis wird auf identifizierbare Vermögenswerte verteilt — auch auf immaterielle wie Marke und Kundenbeziehungen. Was übrig bleibt, wird Goodwill. Eine 150-jährige Familientradition wird so zur bilanziellen Residualgröße.",
+    succM1Lit: "Anschluss: IFRS 3 · IAS 36 Impairment-Test · Glaum et al. (2018)",
+    succM2Phase: "Mechanismus 2", succM2Title: "Finanzierungsmix-Shift",
+    succM2Body: "Die Passivseite kehrt sich um: vom beziehungsbasierten Modell zum vertragsbasierten Modell. Rechnungswesen wird Governance-relevant, weil Covenants und Reporting-Pflichten greifen.",
+    succM2Lit: "Anschluss: Pecking Order (Myers 1984) · Croci et al. (2011)",
+    succM3Phase: "Mechanismus 3", succM3Title: "Bilanzpolitische Gestaltung",
+    succM3Body: "Neue Eigentümer nutzen Gestaltungsspielräume zum Signaling: Big-Bath-Effekte schaffen einen niedrigen Startpunkt, strategisches Goodwill-Impairment distanziert von der Alt-Strategie.",
+    succM3Lit: "Anschluss: Healy & Wahlen (1999) · Legitimitätstheorie (Suchman 1995)",
+    succLinkTag: "Die Verbindung zu IFRS 16",
+    succLinkBody: "In beiden Fällen geht es um Bewertung unter Unsicherheit. Bei IFRS 16 ist der <strong>Diskontierungssatz</strong> die kritische Schätzung; bei IFRS 3 ist es der <strong>Fair Value</strong> immaterieller Vermögenswerte. Beide Standards geben dem Bilanzierenden Ermessensspielräume — und genau dort beginnt die wissenschaftlich spannende Frage: Wie werden diese Spielräume genutzt?",
+
+    quizTitle: "Selbsttest",
+    quizIntro: "Fünf Fragen, um das Verständnis zu prüfen. Klick auf die Antwort, die du für richtig hältst — die Erklärung erscheint sofort.",
+
+    srcTitle: "Quellen & Weiterlesen",
+    srcIntro: "Wer tiefer einsteigen möchte, findet hier die zentralen Standardtexte, Lehrbücher und wissenschaftlichen Arbeiten — geordnet nach Einstiegsniveau.",
+    srcGroup1: "Standards & Praxisliteratur",
+    srcGroup2: "Wissenschaftliche Vertiefung",
+    src1Note: "Standardtexte, ifrs.org",
+    src2Note: "Frei verfügbar, gut für den Einstieg",
+    src3Note: "Deutschsprachiges Standardlehrbuch",
+    src4Note: "Kostenlose Standardzusammenfassungen",
+
+    footerText: "Ein Weiterbildungsmodul, das zwei Probevorträge zu einem zusammenhängenden Lernpfad verbindet — von der Leasingbilanzierung bis zur Unternehmensnachfolge.",
+    footerCredit: "Erstellt als Begleitmaterial · Dr. Christian Neusser · Hochschule Esslingen",
+  },
+  en: {
+    htmlLang: "en",
+    brandSuffix: "in Context",
+    navBridge: "The Bridge", navLeasing: "IFRS 16", navBilanz: "The Balance Sheet",
+    navLab: "Calc Lab", navSuccession: "Succession", navQuiz: "Self-test", navSources: "Sources",
+
+    heroEyebrow: "Deep Dive · Continuing-education module for students",
+    heroTitle: "How a standard<br>shapes the <em>truth</em><br>of a balance sheet.",
+    heroLede: "Two lectures, one common thread: international accounting decides what becomes visible on a balance sheet — for a leased vehicle just as for the takeover of a family business. This module connects both worlds and makes the thread visible.",
+    heroMeta1L: "Context", heroMeta1V: "B.Sc. Industrial Management",
+    heroMeta2L: "Level", heroMeta2V: "Fundamentals → Advanced",
+    heroMeta3L: "Duration", heroMeta3V: "approx. 40 minutes",
+    heroMeta4L: "Author", heroMeta4V: "Dr. Christian Neusser",
+    heroScroll: "↓ scroll",
+
+    bridgeTitle: "The Common Thread",
+    bridgeIntro: "At first glance, a lease contract for a CNC machine and the succession of a family business have little in common. In fact, both pose the same fundamental question — and both are answered by international accounting.",
+    bridgeCard1Tag: "Lecture 1 · IFRS 16", bridgeCard1Title: "Leasing",
+    bridgeCard1Body: "A company uses an asset without owning it. The question: does this use belong on the balance sheet — and if so, at what value?",
+    bridgeCard2Tag: "Lecture 2 · IFRS 3", bridgeCard2Title: "Succession",
+    bridgeCard2Body: "A company is acquired. The question: how is the purchase price allocated across assets — and what happens to whatever is left over?",
+    bridgeThesis: "Both standards solve the same problem: they translate economic substance into accounting form. \"Substance over form\" — the content counts, not the label.",
+
+    leasingTitle: "IFRS 16 — Making Leasing Visible",
+    leasingIntro: "Until 2019, companies could keep huge obligations off the balance sheet. An airline leasing its fleet looked leaner than one that bought it — even though both were economically committed. IFRS 16 ended that.",
+    leasingCardA: "Rent or Lease?",
+    leasingCardABody: "In everyday language, <em>rent</em> means the short-term and flexible, <em>lease</em> the long-term and contractually fixed. IFRS 16 does not recognise this distinction at all — the standard asks only about economic substance.",
+    leasingCardATag: "KEY CONCEPT",
+    leasingCardB: "The Identification Test",
+    leasingCardBBody: "A lease exists when the right to use an <em>identified asset</em> is transferred for a period of time and the user controls that use.",
+    leasingCardCBody: "The economic right to use the asset over the lease term. It is capitalised like ownership — even without legal title.",
+    leasingCardCTag: "ASSET SIDE",
+    leasingCardDBody: "The obligation to make future lease payments, measured at present value. Discounting uses the incremental borrowing rate.",
+    leasingCardDTag: "LIABILITY SIDE",
+    leasingCalloutTag: "Why it matters",
+    leasingCalloutBody: "On first-time adoption in 2019, Lufthansa's total assets grew by roughly <strong>€8 billion</strong>, those of Deutsche Post DHL by about <strong>€5 billion</strong>. The business was unchanged — only its balance-sheet presentation shifted. That is precisely why companies had to renegotiate loan covenants with their banks at the time.",
+
+    bilanzTitle: "The Balance Sheet — Visibly Extended",
+    bilanzIntro: "The core of IFRS 16 can be read off the balance sheet. A new right-of-use asset on the asset side, a new lease liability on the liability side — both sides grow by the same amount. This is called <em>balance sheet extension</em>. Click below to switch between the two standards.",
+    bsBtnIAS: "Under IAS 17", bsBtnIFRS: "Under IFRS 16",
+    bsCapAssets: "Assets — Use of Funds", bsCapLiab: "Equity & Liabilities — Source of Funds",
+    bsChip1L: "Total assets", bsChip2L: "Equity ratio", bsChip3L: "Gearing", bsChip4L: "Asset intensity",
+    bsObsTag: "Observation",
+    bilanzStmtIntro: "The balance sheet extension is only the beginning. IFRS 16 changes <em>every</em> one of the three financial statements — balance sheet, income statement and cash flow statement. The overview below sets the old and the new world directly side by side.",
+    stmtHStmt: "Statement", stmtHOld: "Under IAS 17 (old)", stmtHNew: "Under IFRS 16 (new)",
+    stmtR1Name: "Balance Sheet",
+    stmtR1Old: "Operating leases do <em>not</em> appear on the balance sheet. There is only a rental expense in the income statement. The balance sheet stays short.",
+    stmtR1New: "<strong>A right-of-use asset and a lease liability are recognised.</strong> The balance sheet extends on both sides.<div style=\"margin-top:0.5rem\"><span class=\"stmt-effect\">Assets ↑</span> <span class=\"stmt-effect\">Leverage ↑</span> <span class=\"stmt-effect\">Equity ratio ↓</span></div>",
+    stmtR2Name: "Income Statement",
+    stmtR2Old: "A constant rental expense per year (e.g. €50,000), recognised as an operating expense above EBIT.",
+    stmtR2New: "<strong>Two expenses:</strong> depreciation (constant) plus interest expense (declining). Total expense is <em>front-loaded</em>.<div style=\"margin-top:0.5rem\"><span class=\"stmt-effect\">EBITDA ↑</span> <span class=\"stmt-effect\">EBIT ≈</span> <span class=\"stmt-effect\">early profit ↓</span></div>",
+    stmtR3Name: "Cash Flow Statement",
+    stmtR3Old: "The entire lease payment sits within operating cash flow.",
+    stmtR3New: "<strong>Split:</strong> the principal portion moves to financing cash flow; only the interest portion stays operating (depending on the policy choice).<div style=\"margin-top:0.5rem\"><span class=\"stmt-effect\">operating CF ↑</span> <span class=\"stmt-effect\">financing CF ↓</span> <span class=\"stmt-effect\">total CF =</span></div>",
+    bilanzWhyTag: "Why the change mattered",
+    bilanzWhyBody: "The business and the cash flows are identical before and after IFRS 16 — only the <strong>presentation</strong> changes. Yet loan covenants, credit ratings and analysts' valuation models all run on the <em>reported</em> figures. A company with large operating-lease holdings looked leaner and more solid under IAS 17 than it economically was. IFRS 16 closes this transparency gap — and finally makes two economically equivalent companies comparable.",
+
+    labTitle: "Calculation Lab — Try It Yourself",
+    labIntro: "Theory becomes tangible when you play with the numbers. Change the parameters of a lease contract and watch how present value, amortisation and the typical \"front-loading\" effect shift.",
+    labModelTag: "Interactive model · CNC machine",
+    labCtrlPay: "Annual payment", labCtrlTerm: "Lease term", labCtrlRate: "Interest rate (IBR)",
+    labStatPV: "Present value / RoU asset", labStatInt: "Σ Interest expense", labStatCash: "Σ Cash payments", labStatDep: "Depreciation p.a.",
+    labLegDep: "Depreciation (constant)", labLegInt: "Interest expense (declining)",
+    labThYear: "Year", labThOpen: "Opening balance", labThInt: "Interest", labThPay: "Payment",
+    labThPrin: "Principal", labThClose: "Closing balance", labThExp: "Total expense",
+    labObsTag: "Observation",
+    labYearsUnit: "years", labYearAbbr: "Y",
+
+    succTitle: "IFRS 3 — When a Company Changes Owner",
+    succIntro: "A business succession is not only a leadership and culture topic. As soon as a family business is acquired externally, an accounting event arises — governed by IFRS 3. The same logic appears as with IFRS 16: economic substance must be translated into accounting form.",
+    succBeforeTag: "Before succession", succBeforeTitle: "Family-typical liability side",
+    succBefore1: "Family equity",
+    succBefore2: "Shareholder loans, subordinated and flexible",
+    succBefore3: "Long-standing house-bank relationship",
+    succBefore4: "Public funding (KfW, L-Bank)",
+    succBefore5: "Low external reporting requirements",
+    succAfterTag: "After external succession", succAfterTitle: "Institutionalised mix",
+    succAfter1: "Acquisition finance with covenants",
+    succAfter2: "Mezzanine capital",
+    succAfter3: "Private equity as co-investor",
+    succAfter4: "Earn-out towards the former owner family",
+    succAfter5: "Extensive monthly reporting",
+    succMechHead: "Three mechanisms that change the balance sheet",
+    succM1Phase: "Mechanism 1", succM1Title: "Purchase Price Allocation & Goodwill",
+    succM1Body: "The purchase price is allocated across identifiable assets — including intangibles such as brand and customer relationships. Whatever remains becomes goodwill. A 150-year family tradition thus turns into an accounting residual.",
+    succM1Lit: "Links to: IFRS 3 · IAS 36 impairment test · Glaum et al. (2018)",
+    succM2Phase: "Mechanism 2", succM2Title: "Financing-Mix Shift",
+    succM2Body: "The liability side inverts: from a relationship-based model to a contract-based one. Accounting becomes governance-relevant because covenants and reporting obligations take hold.",
+    succM2Lit: "Links to: Pecking Order (Myers 1984) · Croci et al. (2011)",
+    succM3Phase: "Mechanism 3", succM3Title: "Accounting-Policy Discretion",
+    succM3Body: "New owners use discretion for signalling: big-bath effects create a low starting point, strategic goodwill impairment distances them from the predecessor's strategy.",
+    succM3Lit: "Links to: Healy & Wahlen (1999) · Legitimacy theory (Suchman 1995)",
+    succLinkTag: "The link back to IFRS 16",
+    succLinkBody: "In both cases it is about valuation under uncertainty. With IFRS 16 the <strong>discount rate</strong> is the critical estimate; with IFRS 3 it is the <strong>fair value</strong> of intangible assets. Both standards grant the preparer discretion — and that is exactly where the scientifically interesting question begins: how is this discretion used?",
+
+    quizTitle: "Self-test",
+    quizIntro: "Five questions to check your understanding. Click the answer you believe is correct — the explanation appears immediately.",
+
+    srcTitle: "Sources & Further Reading",
+    srcIntro: "For those who want to go deeper, here are the central standard texts, textbooks and academic papers — ordered by entry level.",
+    srcGroup1: "Standards & practitioner literature",
+    srcGroup2: "Academic depth",
+    src1Note: "Standard texts, ifrs.org",
+    src2Note: "Freely available, good for getting started",
+    src3Note: "German-language standard textbook",
+    src4Note: "Free standard summaries",
+
+    footerText: "A continuing-education module connecting two trial lectures into one coherent learning path — from lease accounting to business succession.",
+    footerCredit: "Created as supporting material · Dr. Christian Neusser · Esslingen University of Applied Sciences",
+  }
+};
+
+// quiz data per language
+const QUIZ = {
+  de: [
+    { q: "Worin liegt der entscheidende Unterschied zwischen IAS 17 und IFRS 16 aus Sicht des Leasingnehmers?",
+      opts: ["IFRS 16 senkt die Leasingkosten insgesamt","IFRS 16 bringt nahezu alle Leasingverhältnisse in die Bilanz","IFRS 16 schafft das Leasing als Finanzierungsform ab","IFRS 16 betrifft nur Leasinggeber, nicht Leasingnehmer"],
+      correct: 1,
+      explain: "IFRS 16 beendet die Unterscheidung zwischen Finance und Operating Lease für Leasingnehmer. Fast alle Leasingverhältnisse werden über das Right-of-Use-Modell aktiviert — die Gesamtkosten bleiben gleich, nur ihre Sichtbarkeit ändert sich." },
+    { q: "Warum steigt das EBITDA unter IFRS 16, obwohl sich das Geschäft nicht verändert hat?",
+      opts: ["Weil die Umsätze durch IFRS 16 steigen","Weil Leasingzahlungen nun komplett entfallen","Weil der Mietaufwand durch Abschreibung und Zins ersetzt wird — beide außerhalb des EBITDA","Weil IFRS 16 eine Steuerersparnis erzwingt"],
+      correct: 2,
+      explain: "Unter IAS 17 war die gesamte Leasingrate ein operativer Aufwand und reduzierte das EBITDA. Unter IFRS 16 wird sie durch Abschreibung und Zinsaufwand ersetzt — beide werden in der EBITDA-Berechnung nicht berücksichtigt. Das EBITDA steigt rein rechnerisch." },
+    { q: "Was bezeichnet der Begriff ‚Right-of-Use Asset‘?",
+      opts: ["Den juristischen Eigentumsanspruch am Leasinggegenstand","Das ökonomische Recht, einen Vermögenswert über die Laufzeit zu nutzen","Eine Rückstellung für Reparaturkosten","Den Restwert des Leasinggegenstands am Vertragsende"],
+      correct: 1,
+      explain: "Das Right-of-Use Asset ist das aktivierte Nutzungsrecht — nicht das juristische Eigentum. IFRS 16 behandelt dieses Recht bilanziell wie Eigentum, weil der Leasingnehmer wirtschaftlich über die Nutzung verfügt." },
+    { q: "Was geschieht bei einer Kaufpreisallokation nach IFRS 3 mit dem Betrag, der nach Bewertung aller identifizierbaren Vermögenswerte übrig bleibt?",
+      opts: ["Er wird sofort als Aufwand verbucht","Er wird an die Alt-Eigentümer zurückgezahlt","Er wird als Goodwill aktiviert und unterliegt dem Impairment-Test","Er wird steuerfrei in die Rücklagen eingestellt"],
+      correct: 2,
+      explain: "Der Residualbetrag wird als Goodwill aktiviert. Goodwill wird nicht planmäßig abgeschrieben, sondern jährlich auf Werthaltigkeit geprüft (Impairment-Test nach IAS 36). Gerade bei Familienunternehmen steckt im Goodwill oft der schwer bewertbare Markenwert." },
+    { q: "Was verbindet IFRS 16 und IFRS 3 konzeptionell?",
+      opts: ["Beide schreiben dieselben Diskontierungssätze vor","Beide übersetzen wirtschaftliche Substanz in bilanzielle Form und enthalten Ermessensspielräume","Beide gelten nur für börsennotierte Unternehmen","Beide wurden zeitgleich abgeschafft"],
+      correct: 1,
+      explain: "Beide Standards folgen dem Prinzip ‚substance over form‘ — der wirtschaftliche Gehalt zählt, nicht das rechtliche Etikett. Und beide räumen dem Bilanzierenden Ermessen ein: bei IFRS 16 der Diskontierungssatz, bei IFRS 3 die Fair-Value-Bewertung immaterieller Vermögenswerte. Genau dort beginnt die bilanzpolitische Forschungsfrage." }
+  ],
+  en: [
+    { q: "What is the decisive difference between IAS 17 and IFRS 16 from the lessee's perspective?",
+      opts: ["IFRS 16 lowers total leasing costs","IFRS 16 brings almost all leases onto the balance sheet","IFRS 16 abolishes leasing as a form of financing","IFRS 16 affects only lessors, not lessees"],
+      correct: 1,
+      explain: "IFRS 16 ends the distinction between finance and operating leases for lessees. Almost all leases are capitalised via the right-of-use model — total costs stay the same, only their visibility changes." },
+    { q: "Why does EBITDA rise under IFRS 16, even though the business has not changed?",
+      opts: ["Because revenue increases under IFRS 16","Because lease payments now disappear entirely","Because the rental expense is replaced by depreciation and interest — both outside EBITDA","Because IFRS 16 forces a tax saving"],
+      correct: 2,
+      explain: "Under IAS 17 the entire lease payment was an operating expense and reduced EBITDA. Under IFRS 16 it is replaced by depreciation and interest expense — neither of which is included in the EBITDA calculation. EBITDA rises purely arithmetically." },
+    { q: "What does the term 'right-of-use asset' denote?",
+      opts: ["The legal ownership claim to the leased item","The economic right to use an asset over the lease term","A provision for repair costs","The residual value of the leased item at contract end"],
+      correct: 1,
+      explain: "The right-of-use asset is the capitalised right of use — not legal ownership. IFRS 16 treats this right like ownership for accounting purposes, because the lessee economically controls the use." },
+    { q: "Under an IFRS 3 purchase price allocation, what happens to the amount left over after all identifiable assets have been measured?",
+      opts: ["It is expensed immediately","It is repaid to the former owners","It is capitalised as goodwill and subject to the impairment test","It is added tax-free to reserves"],
+      correct: 2,
+      explain: "The residual is capitalised as goodwill. Goodwill is not amortised on a schedule but tested annually for impairment (IAS 36). In family businesses in particular, goodwill often contains the hard-to-value brand." },
+    { q: "What links IFRS 16 and IFRS 3 conceptually?",
+      opts: ["Both prescribe the same discount rates","Both translate economic substance into accounting form and contain discretion","Both apply only to listed companies","Both were abolished at the same time"],
+      correct: 1,
+      explain: "Both standards follow the 'substance over form' principle — economic content counts, not the legal label. And both grant the preparer discretion: with IFRS 16 the discount rate, with IFRS 3 the fair-value measurement of intangible assets. That is exactly where the accounting-policy research question begins." }
+  ]
+};
+
+let LANG = 'de';
+
+function applyLang(lang) {
+  LANG = lang;
+  const dict = I18N[lang];
+  document.documentElement.lang = dict.htmlLang;
+  // static elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  // switch buttons
+  document.getElementById('langDE').classList.toggle('active', lang === 'de');
+  document.getElementById('langEN').classList.toggle('active', lang === 'en');
+  // dynamic parts
+  if (typeof recalc === 'function') recalc();
+  if (typeof setBS === 'function') setBS(currentBS);
+  if (typeof renderQuiz === 'function') renderQuiz();
+}
+
+function setLang(lang) { applyLang(lang); }
+
 /* ============================================================
    PROGRESS BAR
 ============================================================ */
@@ -1554,16 +1910,18 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 const iPay = document.getElementById('iPay');
 const iTerm = document.getElementById('iTerm');
 const iRate = document.getElementById('iRate');
-const fmt = (n) => '€ ' + Math.round(n).toLocaleString('de-DE');
+const fmt = (n) => '€ ' + Math.round(n).toLocaleString(LANG === 'de' ? 'de-DE' : 'en-US');
 
 function recalc() {
   const pay = +iPay.value;
   const term = +iTerm.value;
   const rate = +iRate.value / 100;
+  const d = I18N[LANG];
 
   document.getElementById('vPay').textContent = fmt(pay);
-  document.getElementById('vTerm').textContent = term + ' Jahre';
-  document.getElementById('vRate').textContent = (rate*100).toFixed(1).replace('.',',') + ' %';
+  document.getElementById('vTerm').textContent = term + ' ' + d.labYearsUnit;
+  document.getElementById('vRate').textContent =
+    (LANG === 'de' ? (rate*100).toFixed(1).replace('.', ',') : (rate*100).toFixed(1)) + ' %';
 
   // present value of annuity
   const pv = pay * (1 - Math.pow(1+rate, -term)) / rate;
@@ -1626,7 +1984,7 @@ function recalc() {
     stack.appendChild(intPart);
     const yr = document.createElement('div');
     yr.className = 'yr';
-    yr.textContent = 'J' + r.y;
+    yr.textContent = d.labYearAbbr + r.y;
     col.appendChild(stack);
     col.appendChild(yr);
     bars.appendChild(col);
@@ -1636,15 +1994,23 @@ function recalc() {
   const firstExp = dep + rows[0].interest;
   const lastExp = dep + rows[rows.length-1].interest;
   const spread = ((firstExp - lastExp) / lastExp * 100).toFixed(0);
-  document.getElementById('labInsight').innerHTML =
-    'Die Summe aller Aufwendungen entspricht exakt den Cash-Zahlungen von <strong>' +
-    fmt(pay*term) + '</strong>. IFRS 16 erzeugt keinen Mehraufwand — es verschiebt nur das Timing. ' +
-    'Im ersten Jahr liegt der Gesamtaufwand rund <strong>' + spread +
-    ' %</strong> über dem des letzten Jahres. Das ist der „front-loading"-Effekt: ' +
-    'Der Zinsanteil ist anfangs hoch und sinkt mit dem Schuldenstand.';
+  if (LANG === 'de') {
+    document.getElementById('labInsight').innerHTML =
+      'Die Summe aller Aufwendungen entspricht exakt den Cash-Zahlungen von <strong>' +
+      fmt(pay*term) + '</strong>. IFRS 16 erzeugt keinen Mehraufwand — es verschiebt nur das Timing. ' +
+      'Im ersten Jahr liegt der Gesamtaufwand rund <strong>' + spread +
+      ' %</strong> über dem des letzten Jahres. Das ist der „front-loading\"-Effekt: ' +
+      'Der Zinsanteil ist anfangs hoch und sinkt mit dem Schuldenstand.';
+  } else {
+    document.getElementById('labInsight').innerHTML =
+      'The sum of all expenses equals the cash payments of exactly <strong>' +
+      fmt(pay*term) + '</strong>. IFRS 16 creates no extra cost — it only shifts the timing. ' +
+      'In the first year, total expense is roughly <strong>' + spread +
+      ' %</strong> above that of the final year. That is the \"front-loading\" effect: ' +
+      'the interest portion is high at first and declines as the liability is paid down.';
+  }
 }
 [iPay, iTerm, iRate].forEach(el => el.addEventListener('input', recalc));
-recalc();
 
 /* ============================================================
    BALANCE SHEET VISUALISER
@@ -1655,13 +2021,47 @@ recalc();
 var BS_PXPERM = 3.0;   // pixels of bar height per EUR million
 
 function bsBlock(cls, label, value) {
+  var unit = (LANG === 'de') ? ' Mio.' : 'm';
   return '<div class="bs-block ' + cls + '" style="height:' + (value * BS_PXPERM) + 'px">' +
          '<span class="bs-label">' + label + '</span>' +
-         '<span class="bs-val">\u20AC ' + value + ' Mio.</span></div>';
+         '<span class="bs-val">\u20AC ' + value + unit + '</span></div>';
 }
 
+var currentBS = 'ias17';
+
+var BS_TXT = {
+  de: {
+    assets: 'Sonstige Aktiva', rou: 'Nutzungsrecht (neu)',
+    liab: 'Verbindlichkeiten', equity: 'Eigenkapital', lease: 'Leasingverbindlichkeit (neu)',
+    total: 'Bilanzsumme: \u20AC ', unit: ' Mio.',
+    base: 'Ausgangswert',
+    dTotal: '+ 12 Mio. (Bilanzverlängerung)',
+    dEq: '\u2193 von 40,0 % \u2014 4,3 pp',
+    dGear: '\u2191 von 150 % auf 180 %',
+    dAssetIFRS: 'Nutzungsrecht erhöht die Aktiva',
+    dAssetIAS: 'Operating-Leasing unsichtbar',
+    insIFRS: 'Beide Seiten der Bilanz wachsen um <strong>\u20AC 12 Mio.</strong> \u2014 den Barwert der Leasingverpflichtungen. Das Eigenkapital bleibt unverändert bei \u20AC 40 Mio., also <strong>sinkt die Eigenkapitalquote von 40,0 % auf 35,7 %</strong>. Auf dem Papier wirkt das Unternehmen höher verschuldet \u2014 obwohl sich wirtschaftlich nichts geändert hat. Genau das ist die <em>Bilanzverlängerung</em>.',
+    insIAS: 'Unter IAS 17 bleibt das Operating-Leasing <strong>unsichtbar</strong> \u2014 es taucht nur als Mietaufwand in der GuV auf, nicht in der Bilanz. Die Bilanzsumme beträgt \u20AC 100 Mio., die Eigenkapitalquote 40,0 %. Wechsle zu <strong>IFRS 16</strong> und beobachte, wie sich die Bilanz auf beiden Seiten verlängert.'
+  },
+  en: {
+    assets: 'Other assets', rou: 'Right-of-use asset (new)',
+    liab: 'Liabilities', equity: 'Equity', lease: 'Lease liability (new)',
+    total: 'Total assets: \u20AC ', unit: 'm',
+    base: 'Baseline',
+    dTotal: '+ €12m (balance sheet extension)',
+    dEq: '\u2193 from 40.0 % \u2014 4.3 pp',
+    dGear: '\u2191 from 150 % to 180 %',
+    dAssetIFRS: 'Right-of-use asset raises assets',
+    dAssetIAS: 'Operating lease invisible',
+    insIFRS: 'Both sides of the balance sheet grow by <strong>\u20AC 12m</strong> \u2014 the present value of the lease obligations. Equity stays unchanged at \u20AC 40m, so the <strong>equity ratio falls from 40.0 % to 35.7 %</strong>. On paper the company looks more highly leveraged \u2014 even though nothing has changed economically. That is exactly the <em>balance sheet extension</em>.',
+    insIAS: 'Under IAS 17 the operating lease stays <strong>invisible</strong> \u2014 it appears only as a rental expense in the income statement, not on the balance sheet. Total assets are \u20AC 100m, the equity ratio 40.0 %. Switch to <strong>IFRS 16</strong> and watch the balance sheet extend on both sides.'
+  }
+};
+
 function setBS(mode) {
+  currentBS = mode;
   var isIFRS = (mode === 'ifrs16');
+  var t = BS_TXT[LANG];
   document.getElementById('btnIAS17').classList.toggle('active', !isIFRS);
   document.getElementById('btnIFRS16').classList.toggle('active', isIFRS);
 
@@ -1669,26 +2069,27 @@ function setBS(mode) {
   var liabEl   = document.getElementById('bsLiab');
 
   // asset side (bottom-up via column-reverse: first item sits at the bottom)
-  var assetsHTML = bsBlock('assets', 'Sonstige Aktiva', 100);
-  if (isIFRS) assetsHTML += bsBlock('rou', 'Nutzungsrecht (neu)', 12);
+  var assetsHTML = bsBlock('assets', t.assets, 100);
+  if (isIFRS) assetsHTML += bsBlock('rou', t.rou, 12);
   assetsEl.innerHTML = assetsHTML;
 
   // liability side
-  var liabHTML = bsBlock('liab', 'Verbindlichkeiten', 60) +
-                 bsBlock('equity', 'Eigenkapital', 40);
-  if (isIFRS) liabHTML += bsBlock('lease', 'Leasingverbindlichkeit (neu)', 12);
+  var liabHTML = bsBlock('liab', t.liab, 60) + bsBlock('equity', t.equity, 40);
+  if (isIFRS) liabHTML += bsBlock('lease', t.lease, 12);
   liabEl.innerHTML = liabHTML;
 
   var total = isIFRS ? 112 : 100;
-  document.getElementById('bsAssetsTotal').textContent = 'Bilanzsumme: \u20AC ' + total + ' Mio.';
-  document.getElementById('bsLiabTotal').textContent   = 'Bilanzsumme: \u20AC ' + total + ' Mio.';
+  document.getElementById('bsAssetsTotal').textContent = t.total + total + t.unit;
+  document.getElementById('bsLiabTotal').textContent   = t.total + total + t.unit;
 
   // metric chips
   var eqRatio  = (40 / total) * 100;
   var gearing  = ((total - 40) / 40) * 100;
+  var eqStr = (LANG === 'de')
+    ? eqRatio.toFixed(1).replace('.', ',') : eqRatio.toFixed(1);
 
-  document.getElementById('mTotal').textContent = '\u20AC ' + total + ' Mio.';
-  document.getElementById('mEqRatio').textContent = eqRatio.toFixed(1).replace('.', ',') + ' %';
+  document.getElementById('mTotal').textContent = '\u20AC ' + total + t.unit;
+  document.getElementById('mEqRatio').textContent = eqStr + ' %';
   document.getElementById('mGearing').textContent = gearing.toFixed(0) + ' %';
 
   var dT  = document.getElementById('mTotalD');
@@ -1697,128 +2098,71 @@ function setBS(mode) {
   var dA  = document.getElementById('mAssetIntD');
 
   if (isIFRS) {
-    dT.textContent = '+ 12 Mio. (Bilanzverlängerung)'; dT.className = 'bs-chip-delta up';
-    dE.textContent = '\u2193 von 40,0 % \u2014 4,3 pp';      dE.className = 'bs-chip-delta down';
-    dG.textContent = '\u2191 von 150 % auf 180 %';          dG.className = 'bs-chip-delta up';
-    dA.textContent = 'Nutzungsrecht erhöht die Aktiva';     dA.className = 'bs-chip-delta up';
+    dT.textContent = t.dTotal; dT.className = 'bs-chip-delta up';
+    dE.textContent = t.dEq;    dE.className = 'bs-chip-delta down';
+    dG.textContent = t.dGear;  dG.className = 'bs-chip-delta up';
+    dA.textContent = t.dAssetIFRS; dA.className = 'bs-chip-delta up';
     document.getElementById('mAssetInt').textContent = '\u2191';
-    document.getElementById('bsInsight').innerHTML =
-      'Beide Seiten der Bilanz wachsen um <strong>\u20AC 12 Mio.</strong> \u2014 den Barwert ' +
-      'der Leasingverpflichtungen. Das Eigenkapital bleibt unverändert bei \u20AC 40 Mio., ' +
-      'also <strong>sinkt die Eigenkapitalquote von 40,0 % auf 35,7 %</strong>. Auf dem Papier ' +
-      'wirkt das Unternehmen höher verschuldet \u2014 obwohl sich wirtschaftlich nichts geändert hat. ' +
-      'Genau das ist die <em>Bilanzverlängerung</em>.';
+    document.getElementById('bsInsight').innerHTML = t.insIFRS;
   } else {
-    dT.textContent = 'Ausgangswert';        dT.className = 'bs-chip-delta flat';
-    dE.textContent = 'Ausgangswert';        dE.className = 'bs-chip-delta flat';
-    dG.textContent = 'Ausgangswert';        dG.className = 'bs-chip-delta flat';
-    dA.textContent = 'Operating-Leasing unsichtbar'; dA.className = 'bs-chip-delta flat';
+    dT.textContent = t.base; dT.className = 'bs-chip-delta flat';
+    dE.textContent = t.base; dE.className = 'bs-chip-delta flat';
+    dG.textContent = t.base; dG.className = 'bs-chip-delta flat';
+    dA.textContent = t.dAssetIAS; dA.className = 'bs-chip-delta flat';
     document.getElementById('mAssetInt').textContent = '\u2014';
-    document.getElementById('bsInsight').innerHTML =
-      'Unter IAS 17 bleibt das Operating-Leasing <strong>unsichtbar</strong> \u2014 es taucht nur ' +
-      'als Mietaufwand in der GuV auf, nicht in der Bilanz. Die Bilanzsumme beträgt \u20AC 100 Mio., ' +
-      'die Eigenkapitalquote 40,0 %. Wechsle zu <strong>IFRS 16</strong> und beobachte, wie sich ' +
-      'die Bilanz auf beiden Seiten verlängert.';
+    document.getElementById('bsInsight').innerHTML = t.insIAS;
   }
 }
-setBS('ias17');
 
 /* ============================================================
    QUIZ
 ============================================================ */
-const quizData = [
-  {
-    q: "Worin liegt der entscheidende Unterschied zwischen IAS 17 und IFRS 16 aus Sicht des Leasingnehmers?",
-    opts: [
-      "IFRS 16 senkt die Leasingkosten insgesamt",
-      "IFRS 16 bringt nahezu alle Leasingverhältnisse in die Bilanz",
-      "IFRS 16 schafft das Leasing als Finanzierungsform ab",
-      "IFRS 16 betrifft nur Leasinggeber, nicht Leasingnehmer"
-    ],
-    correct: 1,
-    explain: "IFRS 16 beendet die Unterscheidung zwischen Finance und Operating Lease für Leasingnehmer. Fast alle Leasingverhältnisse werden über das Right-of-Use-Modell aktiviert — die Gesamtkosten bleiben gleich, nur ihre Sichtbarkeit ändert sich."
-  },
-  {
-    q: "Warum steigt das EBITDA unter IFRS 16, obwohl sich das Geschäft nicht verändert hat?",
-    opts: [
-      "Weil die Umsätze durch IFRS 16 steigen",
-      "Weil Leasingzahlungen nun komplett entfallen",
-      "Weil der Mietaufwand durch Abschreibung und Zins ersetzt wird — beide außerhalb des EBITDA",
-      "Weil IFRS 16 eine Steuerersparnis erzwingt"
-    ],
-    correct: 2,
-    explain: "Unter IAS 17 war die gesamte Leasingrate ein operativer Aufwand und reduzierte das EBITDA. Unter IFRS 16 wird sie durch Abschreibung und Zinsaufwand ersetzt — beide werden in der EBITDA-Berechnung nicht berücksichtigt. Das EBITDA steigt rein rechnerisch."
-  },
-  {
-    q: "Was bezeichnet der Begriff ‚Right-of-Use Asset‘?",
-    opts: [
-      "Den juristischen Eigentumsanspruch am Leasinggegenstand",
-      "Das ökonomische Recht, einen Vermögenswert über die Laufzeit zu nutzen",
-      "Eine Rückstellung für Reparaturkosten",
-      "Den Restwert des Leasinggegenstands am Vertragsende"
-    ],
-    correct: 1,
-    explain: "Das Right-of-Use Asset ist das aktivierte Nutzungsrecht — nicht das juristische Eigentum. IFRS 16 behandelt dieses Recht bilanziell wie Eigentum, weil der Leasingnehmer wirtschaftlich über die Nutzung verfügt."
-  },
-  {
-    q: "Was geschieht bei einer Kaufpreisallokation nach IFRS 3 mit dem Betrag, der nach Bewertung aller identifizierbaren Vermögenswerte übrig bleibt?",
-    opts: [
-      "Er wird sofort als Aufwand verbucht",
-      "Er wird an die Alt-Eigentümer zurückgezahlt",
-      "Er wird als Goodwill aktiviert und unterliegt dem Impairment-Test",
-      "Er wird steuerfrei in die Rücklagen eingestellt"
-    ],
-    correct: 2,
-    explain: "Der Residualbetrag wird als Goodwill aktiviert. Goodwill wird nicht planmäßig abgeschrieben, sondern jährlich auf Werthaltigkeit geprüft (Impairment-Test nach IAS 36). Gerade bei Familienunternehmen steckt im Goodwill oft der schwer bewertbare Markenwert."
-  },
-  {
-    q: "Was verbindet IFRS 16 und IFRS 3 konzeptionell?",
-    opts: [
-      "Beide schreiben dieselben Diskontierungssätze vor",
-      "Beide übersetzen wirtschaftliche Substanz in bilanzielle Form und enthalten Ermessensspielräume",
-      "Beide gelten nur für börsennotierte Unternehmen",
-      "Beide wurden zeitgleich abgeschafft"
-    ],
-    correct: 1,
-    explain: "Beide Standards folgen dem Prinzip ‚substance over form‘ — der wirtschaftliche Gehalt zählt, nicht das rechtliche Etikett. Und beide räumen dem Bilanzierenden Ermessen ein: bei IFRS 16 der Diskontierungssatz, bei IFRS 3 die Fair-Value-Bewertung immaterieller Vermögenswerte. Genau dort beginnt die bilanzpolitische Forschungsfrage."
-  }
-];
-
-const host = document.getElementById('quizHost');
-quizData.forEach((item, qi) => {
-  const card = document.createElement('div');
-  card.className = 'qcard reveal';
-  io.observe(card);
-  const qt = document.createElement('div');
-  qt.className = 'qtext';
-  qt.textContent = (qi+1) + '.  ' + item.q;
-  card.appendChild(qt);
-  const opts = document.createElement('div');
-  opts.className = 'qopts';
-  const explain = document.createElement('div');
-  explain.className = 'qexplain';
-  explain.textContent = item.explain;
-  item.opts.forEach((optText, oi) => {
-    const opt = document.createElement('div');
-    opt.className = 'qopt';
-    opt.textContent = optText;
-    opt.addEventListener('click', () => {
-      if (card.dataset.done) return;
-      card.dataset.done = '1';
-      if (oi === item.correct) {
-        opt.classList.add('correct');
-      } else {
-        opt.classList.add('wrong');
-        opts.children[item.correct].classList.add('correct');
-      }
-      explain.classList.add('show');
+function renderQuiz() {
+  const host = document.getElementById('quizHost');
+  host.innerHTML = '';
+  QUIZ[LANG].forEach((item, qi) => {
+    const card = document.createElement('div');
+    card.className = 'qcard reveal in';
+    const qt = document.createElement('div');
+    qt.className = 'qtext';
+    qt.textContent = (qi+1) + '.  ' + item.q;
+    card.appendChild(qt);
+    const opts = document.createElement('div');
+    opts.className = 'qopts';
+    const explain = document.createElement('div');
+    explain.className = 'qexplain';
+    explain.textContent = item.explain;
+    item.opts.forEach((optText, oi) => {
+      const opt = document.createElement('div');
+      opt.className = 'qopt';
+      opt.textContent = optText;
+      opt.addEventListener('click', () => {
+        if (card.dataset.done) return;
+        card.dataset.done = '1';
+        if (oi === item.correct) {
+          opt.classList.add('correct');
+        } else {
+          opt.classList.add('wrong');
+          opts.children[item.correct].classList.add('correct');
+        }
+        explain.classList.add('show');
+      });
+      opts.appendChild(opt);
     });
-    opts.appendChild(opt);
+    card.appendChild(opts);
+    card.appendChild(explain);
+    host.appendChild(card);
   });
-  card.appendChild(opts);
-  card.appendChild(explain);
-  host.appendChild(card);
-});
+}
+
+/* ============================================================
+   INITIALISE — language from browser, default German
+============================================================ */
+(function initLang() {
+  var nav = (navigator.language || navigator.userLanguage || 'de').toLowerCase();
+  var start = nav.indexOf('en') === 0 ? 'en' : 'de';
+  applyLang(start);
+})();
 </script>
 
 </body>
